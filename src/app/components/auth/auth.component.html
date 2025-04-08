@@ -11,7 +11,7 @@
           <label class="label">
             <span class="label-text">Name</span>
           </label>
-          <input formControlName="name" type="text" placeholder="Peter Parker" class="input input-bordered w-full" />
+          <input name="name" formControlName="name" type="text" placeholder="Peter Parker" class="input input-bordered w-full" />
         </div>
       }
 
@@ -19,7 +19,7 @@
         <label class="label">
           <span class="label-text">Email</span>
         </label>
-        <input formControlName="email" type="email" placeholder="example.email@gmail.com" class="input input-bordered w-full" />
+        <input name="email" formControlName="email" type="email" placeholder="example.email@gmail.com" class="input input-bordered w-full" />
       </div>
 
       <div class="form-control w-full mb-4">
@@ -28,6 +28,7 @@
         </label>
         <div class="relative">
           <input
+            name="password"
             formControlName="password"
             [type]="isPasswordVisible ? 'text' : 'password'"
             placeholder="Enter at least 8+ characters"
