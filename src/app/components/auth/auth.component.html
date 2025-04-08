@@ -1,1 +1,65 @@
-<p>auth works!</p>
+<div class="flex items-center justify-center min-h-screen bg-gray-100">
+  <div class="card w-96 bg-base-100 shadow-xl p-6">
+    <div class="text-center mb-6">
+      <h1 class="text-3xl font-bold">Welcome.</h1>
+      <p class="text-gray-500 mt-2">{{ isRegister ? 'Create an account' : 'Login Now' }}</p>
+    </div>
+
+    <form [formGroup]="authForm" (ngSubmit)="handleSubmit()">
+      @if (isRegister) {
+        <div class="form-control w-full mb-4">
+          <label class="label">
+            <span class="label-text">Name</span>
+          </label>
+          <input formControlName="name" type="text" placeholder="Peter Parker" class="input input-bordered w-full" />
+        </div>
+      }
+
+      <div class="form-control w-full mb-4">
+        <label class="label">
+          <span class="label-text">Email</span>
+        </label>
+        <input formControlName="email" type="email" placeholder="example.email@gmail.com" class="input input-bordered w-full" />
+      </div>
+
+      <div class="form-control w-full mb-4">
+        <label class="label">
+          <span class="label-text">Password</span>
+        </label>
+        <div class="relative">
+          <input
+            formControlName="password"
+            [type]="isPasswordVisible ? 'text' : 'password'"
+            placeholder="Enter at least 8+ characters"
+            class="input input-bordered w-full pr-10" />
+          <button
+            type="button"
+            class="absolute right-2 top-1/2 transform -translate-y-1/2"
+            (click)="this.isPasswordVisible = !this.isPasswordVisible">
+            <img [src]="isPasswordVisible ? 'icons/visible-off.svg' : 'icons/visible-on.svg'" alt="" />
+          </button>
+        </div>
+      </div>
+
+      <div class="form-control w-full mb-4">
+        <label class="label">
+          <span class="label-text">Select Your Role</span>
+        </label>
+        <select formControlName="role" class="select select-bordered w-full">
+          @for (role of roles; track role) {
+            <option [value]="role">{{ role }}</option>
+          }
+        </select>
+      </div>
+
+      <button [disabled]="!authForm.valid" class="btn btn-neutral w-full mb-4">{{ isRegister ? 'Sign Up' : 'Sign in' }}</button>
+
+      <div class="text-center mt-6">
+        <p>
+          {{ isRegister ? 'Already have an account?' : "Don't have an account?" }}
+          <a class="link link-primary font-semibold" (click)="toggleIsRegister()">{{ isRegister ? 'Sign in' : 'Register' }}</a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>

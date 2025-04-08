@@ -3,7 +3,7 @@ import { AuthComponent } from './components/auth/auth.component';
 
 export const routes: Routes = [
   {
-    path: 'auth/:register',
+    path: 'auth',
     component: AuthComponent,
     title: 'Auth',
   },
