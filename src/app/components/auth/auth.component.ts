@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Roles } from '../../../models';
 import { z } from 'zod';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth',
@@ -10,12 +11,16 @@ import { UserService } from '../../services/user.service';
   templateUrl: './auth.component.html',
   styleUrl: './auth.component.css',
 })
-export class AuthComponent {
-  isRegister = true;
+export class AuthComponent implements OnInit {
+  isRegister: boolean = false;
   isPasswordVisible = false;
   roles: z.infer<typeof Roles>[] = ['Guest', 'Host', 'Volunteer'];
   authForm;
-  constructor(private userService: UserService) {
+  constructor(
+    private userService: UserService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     this.authForm = new FormGroup({
       name: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.maxLength(50)] }),
       email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
@@ -23,8 +28,15 @@ export class AuthComponent {
       role: new FormControl<z.infer<typeof Roles>>('Guest', { nonNullable: true }),
     });
   }
-  toggleIsRegister() {
-    this.isRegister = !this.isRegister;
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.isRegister = params['register'] === 'true';
+      this.toggleIsRegister(this.isRegister);
+    });
+  }
+  toggleIsRegister(val?: boolean) {
+    if (val !== undefined) this.isRegister = val;
+    else this.isRegister = !this.isRegister;
     if (this.isRegister) {
       this.authForm.controls.name.addValidators([Validators.required]);
     } else {
@@ -36,7 +48,7 @@ export class AuthComponent {
     if (this.authForm.valid) {
       if (this.isRegister) {
         this.userService.register(this.authForm.getRawValue()).subscribe(data => {
-          console.log(data);
+          this.router.navigate(['/auth'], { queryParams: { register: !this.isRegister } });
         });
       } else {
         this.userService.login(this.authForm.getRawValue()).subscribe(data => {

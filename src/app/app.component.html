@@ -1,5 +1,8 @@
 @if (loader$ | async) {
   <app-loader></app-loader>
 } @else {
+  @if (alert$ | async) {
+    <app-alert>{{ alert$ | async }}</app-alert>
+  }
   <router-outlet></router-outlet>
 }
