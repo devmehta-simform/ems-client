@@ -3,7 +3,9 @@ import { Roles } from '../../../models';
 import { z } from 'zod';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterEvent } from '@angular/router';
+import { LoaderService } from '../../services/loader.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -12,14 +14,15 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './auth.component.css',
 })
 export class AuthComponent implements OnInit {
-  isRegister: boolean = false;
+  isRegister = false;
   isPasswordVisible = false;
   roles: z.infer<typeof Roles>[] = ['Guest', 'Host', 'Volunteer'];
   authForm;
   constructor(
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private loaderService: LoaderService
   ) {
     this.authForm = new FormGroup({
       name: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.maxLength(50)] }),
@@ -28,10 +31,14 @@ export class AuthComponent implements OnInit {
       role: new FormControl<z.infer<typeof Roles>>('Guest', { nonNullable: true }),
     });
   }
+
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
-      this.isRegister = params['register'] === 'true';
-      this.toggleIsRegister(this.isRegister);
+    this.toggleIsRegister(this.isRegister);
+    this.router.events.subscribe(routerEvent => {
+      if (routerEvent instanceof RouterEvent) {
+        this.isRegister = routerEvent.url.split(/[?=]/)[2] === 'true';
+        this.toggleIsRegister(this.isRegister);
+      }
     });
   }
   toggleIsRegister(val?: boolean) {
@@ -47,13 +54,21 @@ export class AuthComponent implements OnInit {
   handleSubmit() {
     if (this.authForm.valid) {
       if (this.isRegister) {
-        this.userService.register(this.authForm.getRawValue()).subscribe(data => {
-          this.router.navigate(['/auth'], { queryParams: { register: !this.isRegister } });
-        });
+        this.loaderService.show();
+        this.userService
+          .register(this.authForm.getRawValue())
+          .pipe(finalize(() => this.loaderService.hide()))
+          .subscribe(() => {
+            this.router.navigate(['/auth'], { queryParams: { register: false } });
+          });
       } else {
-        this.userService.login(this.authForm.getRawValue()).subscribe(data => {
-          console.log(data);
-        });
+        this.loaderService.show();
+        this.userService
+          .login(this.authForm.getRawValue())
+          .pipe(finalize(() => this.loaderService.hide()))
+          .subscribe(() => {
+            this.router.navigate(['/home']).then(() => this.loaderService.hide());
+          });
       }
     }
   }
