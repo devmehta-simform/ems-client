@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
-const Rating = z.union([z.literal('VeryBad'), z.literal('Bad'), z.literal('Average'), z.literal('Good'), z.literal('VeryGood')]);
+const RatingSchema = z.union([z.literal('VeryBad'), z.literal('Bad'), z.literal('Average'), z.literal('Good'), z.literal('VeryGood')]);
 
-const Review = z.object({
+const ReviewSchema = z.object({
   review: z.string(),
-  rating: Rating,
+  rating: RatingSchema,
   id: z.string(),
   userId: z.string(),
   eventId: z.string(),
@@ -13,4 +13,4 @@ const Review = z.object({
   deletedAt: z.string().datetime().nullable(),
 });
 
-export { Review, Rating };
+export { ReviewSchema, RatingSchema };

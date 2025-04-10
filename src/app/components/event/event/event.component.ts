@@ -1,6 +1,5 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { z } from 'zod';
-import { Event } from '../../../../models';
+import { Event } from '../../../../types';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -10,7 +9,7 @@ import { DatePipe } from '@angular/common';
   styleUrl: './event.component.css',
 })
 export class EventComponent {
-  @Input({ required: true }) event!: z.infer<typeof Event>;
+  @Input({ required: true }) event!: Event;
   heartStatus: 'filled' | 'unfilled' | 'animate' = 'unfilled';
   timeoutId?: number;
   @ViewChild('animatedHeart') animatedHeartRef!: ElementRef;

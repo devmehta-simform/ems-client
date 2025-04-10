@@ -1,13 +1,13 @@
 import { z } from 'zod';
 
-const Roles = z.union([z.literal('Guest'), z.literal('Host'), z.literal('Volunteer')]);
+const RolesSchema = z.union([z.literal('Guest'), z.literal('Host'), z.literal('Volunteer')]);
 
-const User = z.object({
+const UserSchema = z.object({
   name: z.string(),
   id: z.string(),
   email: z.string(),
   password: z.string(),
-  role: Roles,
+  role: RolesSchema,
   avatar: z.string().nullable(),
   passwordUpdatedAt: z.string().datetime(),
   isActive: z.boolean(),
@@ -16,4 +16,4 @@ const User = z.object({
   deletedAt: z.string().datetime().nullable(),
 });
 
-export { User, Roles };
+export { UserSchema, RolesSchema };

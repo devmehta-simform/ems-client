@@ -1,7 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Observable } from 'rxjs';
+import { catchError, map, Observable } from 'rxjs';
+import { Event } from '../../types';
+import { EventSchema } from '../../models';
+import { z } from 'zod';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +13,19 @@ export class EventService {
   private baseUrl = '/event';
   constructor(private httpClient: HttpClient) {}
 
-  getEvents(): Observable<unknown> {
-    return this.httpClient.get(environment.API_BASE_URL + this.baseUrl);
+  getEvents(): Observable<Event[]> {
+    return this.httpClient.get(environment.API_BASE_URL + this.baseUrl).pipe(
+      map(response => {
+        if ('data' in response) {
+          const isEventArray = z.array(EventSchema).safeParse(response.data);
+          if (isEventArray.success) return isEventArray.data;
+          else throw Error('something went wrong');
+        } else throw Error('something went wrong');
+      }),
+      catchError(err => {
+        console.error(err);
+        return [];
+      })
+    );
   }
 }

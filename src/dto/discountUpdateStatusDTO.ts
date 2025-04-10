@@ -1,6 +1,6 @@
-import { Discount } from '../models';
+import { DiscountSchema } from '../models';
 
-const DiscountUpdateStatusSchema = Discount.pick({
+const DiscountUpdateStatusSchema = DiscountSchema.pick({
   status: true,
 });
 

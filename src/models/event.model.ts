@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const Event = z.object({
+const EventSchema = z.object({
   name: z.string(),
   id: z.string(),
   userId: z.string(),
@@ -13,4 +13,4 @@ const Event = z.object({
   dateOfEvent: z.string().datetime(),
 });
 
-export { Event };
+export { EventSchema };

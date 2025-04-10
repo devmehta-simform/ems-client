@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Roles } from '../../../models';
+import { RolesSchema } from '../../../models';
 import { z } from 'zod';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';
@@ -16,7 +16,7 @@ import { finalize } from 'rxjs';
 export class AuthComponent implements OnInit {
   isRegister = false;
   isPasswordVisible = false;
-  roles: z.infer<typeof Roles>[] = ['Guest', 'Host', 'Volunteer'];
+  roles: z.infer<typeof RolesSchema>[] = ['Guest', 'Host', 'Volunteer'];
   authForm;
   constructor(
     private userService: UserService,
@@ -28,7 +28,7 @@ export class AuthComponent implements OnInit {
       name: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.maxLength(50)] }),
       email: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.email] }),
       password: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.minLength(8), Validators.maxLength(20)] }),
-      role: new FormControl<z.infer<typeof Roles>>('Guest', { nonNullable: true }),
+      role: new FormControl<z.infer<typeof RolesSchema>>('Guest', { nonNullable: true }),
     });
   }
 

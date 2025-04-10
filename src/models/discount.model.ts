@@ -1,14 +1,14 @@
 import { z } from 'zod';
 
-const DiscountStatus = z.union([z.literal('Active'), z.literal('InActive'), z.literal('UpComing')]);
+const DiscountStatusSchema = z.union([z.literal('Active'), z.literal('InActive'), z.literal('UpComing')]);
 
-const Discount = z.object({
+const DiscountSchema = z.object({
   id: z.string(),
   eventId: z.string(),
   startsAt: z.string().datetime(),
   endsAt: z.string().datetime(),
-  status: DiscountStatus,
+  status: DiscountStatusSchema,
   discountAmount: z.number(),
 });
 
-export { Discount, DiscountStatus };
+export { DiscountSchema, DiscountStatusSchema };

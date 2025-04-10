@@ -1,14 +1,14 @@
 import { z } from 'zod';
 
-const TransactionStatus = z.union([z.literal('Completed'), z.literal('Pending'), z.literal('Failed')]);
+const TransactionStatusSchema = z.union([z.literal('Completed'), z.literal('Pending'), z.literal('Failed')]);
 
-const Transaction = z.object({
+const TransactionSchema = z.object({
   id: z.string(),
   ticketId: z.string(),
   dateOfTransaction: z.string().datetime(),
   amount: z.number(),
-  status: TransactionStatus,
+  status: TransactionStatusSchema,
   paymentMethod: z.string(),
 });
 
-export { Transaction, TransactionStatus };
+export { TransactionSchema, TransactionStatusSchema };

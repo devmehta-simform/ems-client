@@ -1,6 +1,6 @@
-import { User } from '../models';
+import { UserSchema } from '../models';
 
-const UserRegisterSchema = User.pick({
+const UserRegisterSchema = UserSchema.pick({
   email: true,
   name: true,
   password: true,
