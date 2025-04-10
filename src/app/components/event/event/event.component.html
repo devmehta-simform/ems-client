@@ -1,1 +1,28 @@
-<p>event works!</p>
+<div class="card w-64 bg-white shadow-md rounded-lg overflow-hidden">
+  <div class="bg-gray-200 h-40 flex items-center justify-center">
+    <img [src]="event.images[0]" class="h-40 w-full" alt="" />
+  </div>
+  <div class="p-4 relative">
+    <div class="absolute top-[-150px] left-3">
+      <button (click)="handleLike()" class="w-8 h-8 rounded-full bg-white bg-opacity-75 flex items-center justify-center">
+        <div class="flex justify-center items-center w-full h-full">
+          <img [class.hidden]="heartStatus !== 'unfilled'" class="object-cover w-5 h-5" src="icons/unfilled-heart.svg" alt="heart" />
+          <img [class.hidden]="heartStatus !== 'animate'" class="object-cover w-12 h-12" src="icons/animate-heart.gif" alt="heart" #animatedHeart />
+          <img [class.hidden]="heartStatus !== 'filled'" class="object-cover w-5 h-5" src="icons/filled-heart.svg" alt="heart" />
+        </div>
+      </button>
+    </div>
+    <div class="flex justify-between items-center mb-2">
+      <h2 class="text-base font-medium">{{ event.name }}</h2>
+      <p class="text-sm text-gray-600">From {{ event.ticketPrice }}</p>
+    </div>
+    <div class="flex items-center text-sm text-gray-600 mb-1">
+      <img height="16" width="16" class="mr-2" src="icons/calendar.svg" alt="calendar" />
+      <span>{{ event.dateOfEvent | date }}</span>
+    </div>
+    <div class="flex items-center text-sm text-gray-600">
+      <img height="16" width="16" class="mr-2" src="icons/location.svg" alt="location" />
+      <span>{{ event.venue }}</span>
+    </div>
+  </div>
+</div>

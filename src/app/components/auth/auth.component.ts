@@ -67,7 +67,7 @@ export class AuthComponent implements OnInit {
           .login(this.authForm.getRawValue())
           .pipe(finalize(() => this.loaderService.hide()))
           .subscribe(() => {
-            this.router.navigate(['/home']).then(() => this.loaderService.hide());
+            this.router.navigate(['/guest/explore']).then(() => this.loaderService.hide());
           });
       }
     }

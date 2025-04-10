@@ -1,9 +1,34 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { z } from 'zod';
+import { Event } from '../../../../models';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-event',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './event.component.html',
   styleUrl: './event.component.css',
 })
-export class EventComponent {}
+export class EventComponent {
+  @Input({ required: true }) event!: z.infer<typeof Event>;
+  heartStatus: 'filled' | 'unfilled' | 'animate' = 'unfilled';
+  timeoutId?: number;
+  @ViewChild('animatedHeart') animatedHeartRef!: ElementRef;
+  handleLike() {
+    if (this.heartStatus === 'unfilled') {
+      this.heartStatus = 'animate';
+      this.animatedHeartRef.nativeElement.src = 'icons/animate-heart.gif';
+      this.timeoutId = window.setTimeout(() => {
+        this.heartStatus = 'filled';
+      }, 1700);
+    } else {
+      if (this.heartStatus === 'animate') {
+        if (this.animatedHeartRef.nativeElement instanceof HTMLImageElement) {
+          this.animatedHeartRef.nativeElement.src = 'icons/filled-heart.svg';
+        }
+        window.clearTimeout(this.timeoutId);
+      }
+      this.heartStatus = 'unfilled';
+    }
+  }
+}

@@ -1,1 +1,9 @@
-<p>event-list works!</p>
+<div class="p-5 w-full">
+  <div class="carousel gap-3 rounded-box w-full">
+    @for (event of eventList; track $index) {
+      <div class="carousel-item">
+        <app-event [event]="event"></app-event>
+      </div>
+    }
+  </div>
+</div>
