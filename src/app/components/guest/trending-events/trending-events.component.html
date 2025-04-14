@@ -2,7 +2,16 @@
   <div class="hero-overlay rounded-lg"></div>
   <div class="hero-content flex-col justify-between items-center min-h-screen">
     <div>
-      <h1 class="text-5xl font-bold mt-10 lg:mt-50 text-white">Trending Events</h1>
+      <div class="text-center mb-10">
+        <h1 class="text-3xl md:text-4xl mt-10 lg:mt-20 font-bold text-white mb-2">Discover Unforgettable Experience at <br />Spectacular Events</h1>
+        <div class="mt-10">
+          <label class="input">
+            <img src="icons/search.svg" />
+            <input type="search" required placeholder="Search" />
+          </label>
+        </div>
+        <h1 class="text-3xl md:text-4xl font-bold mt-25 lg:mt-25 text-white">Trending Events</h1>
+      </div>
     </div>
     <div class="flex flex-col gap-x-15 gap-y-5 lg:flex-row lg:absolute lg:bottom-20">
       @for (trendingEvent of trendingEvents; track $index) {
