@@ -28,4 +28,20 @@ export class EventService {
       })
     );
   }
+
+  getEventById(eventId: string): Observable<Event> {
+    return this.httpClient.get(environment.API_BASE_URL + this.baseUrl + `/${eventId}`).pipe(
+      map(response => {
+        if ('data' in response) {
+          const isEvent = EventSchema.safeParse(response.data);
+          if (isEvent.success) return isEvent.data;
+          else throw Error('something went wrong');
+        } else throw Error('something went wrong');
+      }),
+      catchError(err => {
+        console.error(err);
+        return [];
+      })
+    );
+  }
 }
