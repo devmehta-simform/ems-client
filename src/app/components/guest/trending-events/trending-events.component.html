@@ -1,12 +1,10 @@
-<div
-  class="hero bg-base-200 min-h-screen relative rounded-lg"
-  style="background-image: url(https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.webp)">
+<div class="hero bg-base-200 rounded-lg" style="background-image: url(https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.webp)">
   <div class="hero-overlay rounded-lg"></div>
   <div class="hero-content flex-col justify-between items-center min-h-screen">
     <div>
-      <h1 class="text-5xl font-bold mt-10 lg:mt-50 text-white">Hello there</h1>
+      <h1 class="text-5xl font-bold mt-10 lg:mt-50 text-white">Trending Events</h1>
     </div>
-    <div class="flex flex-col gap-x-15 gap-y-5 lg:flex-row lg:absolute lg:bottom-50">
+    <div class="flex flex-col gap-x-15 gap-y-5 lg:flex-row lg:absolute lg:bottom-20">
       @for (trendingEvent of trendingEvents; track $index) {
         <app-event [event]="trendingEvent"></app-event>
       }

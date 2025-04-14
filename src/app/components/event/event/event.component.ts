@@ -16,7 +16,7 @@ export class EventComponent {
   handleLike() {
     if (this.heartStatus === 'unfilled') {
       this.heartStatus = 'animate';
-      this.animatedHeartRef.nativeElement.src = 'icons/animate-heart.gif';
+      this.animatedHeartRef.nativeElement.src = `icons/animate-heart.gif?t=${Date.now()}`;
       this.timeoutId = window.setTimeout(() => {
         this.heartStatus = 'filled';
       }, 1700);
