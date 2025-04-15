@@ -1,1 +1,153 @@
-<p *ngIf="event$ | async as event">{{ event.name }}</p>
+<div *ngIf="event$ | async as event">
+  <div class="hero bg-base-200 rounded-lg mt-3" [style]="'background-image: url(' + event.images[0] + ');'">
+    <div class="hero-overlay rounded-lg object-cover"></div>
+    <div class="hero-content text-center w-full text-neutral-content m-10">
+      <div class="max-w-md flex flex-col justify-items-center items-center">
+        <div class="text-lg font-bold">{{ event.dateOfEvent | date: 'mediumDate' }}</div>
+        <h1 class="text-5xl font-bold">{{ event.name }}</h1>
+        <p class="py-6">
+          Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id
+          nisi.
+        </p>
+        <div class="flex flex-col lg:flex-row gap-3">
+          <button class="btn">
+            <img src="icons/star.svg" alt="" />
+            {{ event.review?.rating || 'unrated' }}
+          </button>
+          <button class="btn">
+            <img src="icons/group.svg" alt="" />
+            {{ event.numberOfTicketsSold || 'no one has participated yet' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div>
+    <div class="flex flex-col lg:flex-row mt-3">
+      <div class="p-6 lg:p-10 md:p-20 lg:w-7/10">
+        <h1 class="text-2xl font-bold text-left">Time and Location</h1>
+        <div class="flex flex-col gap-6 mt-10">
+          <div class="flex flex-col gap-6 lg:flex-row self-stretch justify-center items-center">
+            <div class="flex flex-row self-stretch items-center bg-white shadow-md rounded-lg p-4 w-full">
+              <div class="p-3 bg-blue-100 rounded-lg">
+                <img class="h-8 w-8" src="icons/calendar.svg" alt="" />
+              </div>
+              <div class="m-3 text-left">
+                <h3 class="font-bold uppercase">Date And Time</h3>
+                <p>{{ event.dateOfEvent | date: 'EEEE, MMMM d, HH:mm' }}</p>
+              </div>
+            </div>
+            <div class="flex flex-row self-stretch items-center bg-white shadow-md rounded-lg p-4 w-full">
+              <div class="p-3 bg-blue-100 rounded-lg">
+                <img class="h-8 w-8" src="icons/location.svg" alt="" />
+              </div>
+              <div class="m-3 text-left">
+                <h3 class="font-bold uppercase">Place</h3>
+                <p>{{ event.venue }}</p>
+                <p>{{ event.venue }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="self-stretch">
+            <img class="h-auto w-full rounded-lg" [src]="event.images[0]" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="lg:w-3/10 lg:max-w-[420px] lg:h-3/4 p-6 lg:p-5 md:p-20">
+        <div class="flex flex-col gap-5 p-6 lg:p-5 md:p-10 bg-gray-300 rounded-lg">
+          <div class="bg-white p-5 mt-2 rounded-lg">
+            <h1 class="text-xl font-bold text-left">Price</h1>
+            <div class="grid grid-cols-12">
+              <div class="col-span-7">
+                <p class="text-md font-bold">
+                  $ {{ event.ticketPrice }}
+                  <span class="font-normal"> / Ticket</span>
+                </p>
+              </div>
+              <div class="badge badge-neutral col-span-5 ml-auto text-xs"><img class="h-4 w-4" src="icons/discount.svg" alt="" /> 10% off</div>
+            </div>
+          </div>
+          <button class="btn btn-neutral">Purchase Ticket</button>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col lg:flex-row mt-3">
+      <div class="p-6 lg:p-10 md:p-20 lg:w-7/10">
+        <h1 class="text-2xl font-bold text-left">About the event</h1>
+        <div class="flex flex-col gap-6 mt-10">
+          <div class="flex flex-col gap-6 lg:flex-row self-stretch justify-center items-center">
+            <div class="flex flex-row self-stretch items-center bg-white shadow-md rounded-lg p-4 w-full">
+              <div class="p-3 bg-blue-100 rounded-lg">
+                <img class="h-8 w-8" src="icons/clock.svg" alt="" />
+              </div>
+              <div class="m-3 text-left">
+                <h3 class="font-bold uppercase">Duration</h3>
+                <p>x hours</p>
+              </div>
+            </div>
+            <div class="flex flex-row self-stretch items-center bg-white shadow-md rounded-lg p-4 w-full">
+              <div class="p-3 bg-blue-100 rounded-lg">
+                <img class="h-8 w-8" src="icons/ticket.svg" alt="" />
+              </div>
+              <div class="m-3 text-left">
+                <h3 class="font-bold uppercase">Ticket</h3>
+                <p>Email E-Ticket</p>
+              </div>
+            </div>
+          </div>
+          <div class="self-stretch">
+            <p class="text-lg">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, repellendus ex nesciunt alias quasi aliquid delectus nihil odit ad iure
+              corrupti mollitia id vero nobis minus ipsam. Optio, minus qui! Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas omnis iusto
+              quasi aspernatur reiciendis, maiores minima, in id nostrum cumque officiis enim ea voluptas explicabo repellat deserunt sapiente dolor
+              esse. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio dolor obcaecati quia voluptate veritatis aut dolorem corporis.
+              Dolor beatae tempora esse quibusdam exercitationem nostrum odit, magni laborum quidem, voluptatibus blanditiis. Lorem ipsum dolor sit
+              amet consectetur adipisicing elit. Reprehenderit commodi eius deserunt incidunt. Praesentium id quae qui harum debitis nemo vel, rem
+              totam consequuntur molestiae cupiditate dolore, placeat minus dignissimos!
+            </p>
+          </div>
+          <div class="self-stretch text-2xl font-bold text-left mt-3">
+            <h1>The latest event's album</h1>
+          </div>
+          <div class="self-stretch">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
+              <div class="col-span-1">
+                <img
+                  class="h-auto w-full rounded-lg transition-transform duration-200 ease-in-out active:fixed active:top-1/2 active:left-1/2 active:transform active:translate-x-[-50%] active:translate-y-[-50%] active:scale-110 hover:cursor-zoom-in"
+                  [src]="event.images[0]"
+                  alt="" />
+              </div>
+              <div class="col-span-1">
+                <div class="grid lg:grid-cols-2 gap-2">
+                  @for (image of event.images; track $index) {
+                    <img
+                      class="h-auto w-full rounded-lg transition-transform duration-200 ease-in-out active:fixed active:top-1/2 active:left-1/2 active:transform active:translate-x-[-50%] active:translate-y-[-50%] active:scale-110 hover:cursor-zoom-in"
+                      [src]="image"
+                      alt="" />
+                    <img
+                      class="h-auto w-full rounded-lg transition-transform duration-200 ease-in-out active:fixed active:top-1/2 active:left-1/2 active:transform active:translate-x-[-50%] active:translate-y-[-50%] active:scale-110 hover:cursor-zoom-in"
+                      [src]="image"
+                      alt="" />
+                    <img
+                      class="h-auto w-full rounded-lg transition-transform duration-200 ease-in-out active:fixed active:top-1/2 active:left-1/2 active:transform active:translate-x-[-50%] active:translate-y-[-50%] active:scale-110 hover:cursor-zoom-in"
+                      [src]="image"
+                      alt="" />
+                    <img
+                      class="h-auto w-full rounded-lg transition-transform duration-200 ease-in-out active:fixed active:top-1/2 active:left-1/2 active:transform active:translate-x-[-50%] active:translate-y-[-50%] active:scale-110 hover:cursor-zoom-in"
+                      [src]="image"
+                      alt="" />
+                  }
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col lg:flex-row mt-3">
+      <div class="p-6 lg:p-10 md:p-20">
+        <h1 class="text-2xl font-bold text-left">Similar Events</h1>
+      </div>
+    </div>
+  </div>
+</div>
