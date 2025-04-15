@@ -1,7 +1,15 @@
-<div class="carousel gap-3 mt-3 rounded-box w-full">
-  @for (event of eventList; track $index) {
-    <div class="carousel-item">
-      <app-event [event]="event"></app-event>
-    </div>
-  }
+<div class="relative w-full px-8 md:px-15">
+  <div class="carousel gap-3 mt-3 rounded-box w-full overflow-x-auto">
+    @for (event of eventList; track $index) {
+      <div class="carousel-item" [id]="'slide' + $index">
+        <app-event [event]="event"></app-event>
+      </div>
+    }
+  </div>
+  <div class="absolute top-1/2 left-3 transform -translate-y-1/2 opacity-80">
+    <button (click)="prevSlide()" class="btn btn-circle btn-neutral">❮</button>
+  </div>
+  <div class="absolute top-1/2 right-3 transform -translate-y-1/2 opacity-80">
+    <button (click)="nextSlide()" class="btn btn-circle btn-neutral">❯</button>
+  </div>
 </div>
