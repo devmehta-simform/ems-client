@@ -16,4 +16,8 @@ export class UserService {
   login(user: z.infer<typeof UserLoginSchema>) {
     return this.httpClient.post(environment.API_BASE_URL + this.baseUrl + '/login', user);
   }
+  logout() {
+    console.log('loggin out');
+    return this.httpClient.post(environment.API_BASE_URL + this.baseUrl + '/logout', {}).subscribe();
+  }
 }

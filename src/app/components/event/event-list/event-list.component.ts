@@ -3,6 +3,8 @@ import { EventService } from '../../../services/event.service';
 import { EventComponent } from '../event/event.component';
 import { EventSchema } from '../../../../response-types';
 import { z } from 'zod';
+import { LoaderService } from '../../../services/loader.service';
+import { finalize } from 'rxjs';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 const EventsSchema = z.array(EventSchema);
@@ -16,12 +18,19 @@ const EventsSchema = z.array(EventSchema);
 export class EventListComponent implements OnInit {
   eventList!: z.infer<typeof EventsSchema>;
   currentIndex = 1;
-  constructor(private eventService: EventService) {}
+  constructor(
+    private loaderService: LoaderService,
+    private eventService: EventService
+  ) {}
 
   ngOnInit() {
-    this.eventService.getEvents().subscribe(data => {
-      this.eventList = [...data, ...data];
-    });
+    this.loaderService.show();
+    this.eventService
+      .getEvents()
+      .pipe(finalize(() => this.loaderService.hide()))
+      .subscribe(data => {
+        this.eventList = [...data, ...data];
+      });
   }
 
   prevSlide() {
