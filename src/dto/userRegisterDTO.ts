@@ -1,10 +1,11 @@
-import { UserSchema } from '../models';
+import { z } from 'zod';
+import { RolesSchema } from '../response-types/roles';
 
-const UserRegisterSchema = UserSchema.pick({
-  email: true,
-  name: true,
-  password: true,
-  role: true,
+const UserRegisterSchema = z.object({
+  email: z.string(),
+  name: z.string(),
+  password: z.string(),
+  role: RolesSchema,
 });
 
 export { UserRegisterSchema };

@@ -1,7 +1,8 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
-import { Event } from '../../../../types';
+import { EventSchema } from '../../../../response-types';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { z } from 'zod';
 
 @Component({
   selector: 'app-event',
@@ -10,7 +11,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './event.component.css',
 })
 export class EventComponent {
-  @Input({ required: true }) event!: Event;
+  @Input({ required: true }) event!: z.infer<typeof EventSchema>;
   heartStatus: 'filled' | 'unfilled' | 'animate' = 'unfilled';
   timeoutId?: number;
   @ViewChild('animatedHeart') animatedHeartRef!: ElementRef;

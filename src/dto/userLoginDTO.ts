@@ -1,9 +1,10 @@
-import { UserRegisterSchema } from './userRegisterDTO';
+import { z } from 'zod';
+import { RolesSchema } from '../response-types';
 
-const UserLoginSchema = UserRegisterSchema.pick({
-  email: true,
-  password: true,
-  role: true,
+const UserLoginSchema = z.object({
+  email: z.string(),
+  password: z.string(),
+  role: RolesSchema,
 });
 
 export { UserLoginSchema };

@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Event } from '../../../../types';
+import { EventDetailsSchema } from '../../../../response-types';
 import { EventService } from '../../../services/event.service';
 import { LoaderService } from '../../../services/loader.service';
 import { finalize, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
+import { z } from 'zod';
+
 @Component({
   selector: 'app-event-details',
   imports: [AsyncPipe, CommonModule],
@@ -13,7 +15,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './event-details.component.css',
 })
 export class EventDetailsComponent implements OnInit {
-  event$!: Observable<Event>;
+  event$!: Observable<z.infer<typeof EventDetailsSchema>>;
   constructor(
     private activatedRoute: ActivatedRoute,
     private eventService: EventService,

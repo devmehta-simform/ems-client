@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RolesSchema } from '../../../models';
+import { RolesSchema } from '../../../response-types/roles';
 import { z } from 'zod';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../services/user.service';

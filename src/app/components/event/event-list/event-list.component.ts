@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../../../services/event.service';
 import { EventComponent } from '../event/event.component';
-import { Event } from '../../../../types';
+import { EventSchema } from '../../../../response-types';
+import { z } from 'zod';
+
+/* eslint-disable @typescript-eslint/no-unused-vars */
+const EventsSchema = z.array(EventSchema);
 
 @Component({
   selector: 'app-event-list',
@@ -10,7 +14,7 @@ import { Event } from '../../../../types';
   styleUrl: './event-list.component.css',
 })
 export class EventListComponent implements OnInit {
-  eventList!: Event[];
+  eventList!: z.infer<typeof EventsSchema>;
   currentIndex = 1;
   constructor(private eventService: EventService) {}
 
