@@ -35,7 +35,7 @@ export class EventService {
       map(response => {
         if ('data' in response) {
           const isEvent = EventDetailsSchema.safeParse(response.data);
-          console.log(isEvent.error);
+          // console.log(isEvent.error);
           if (isEvent.success) return isEvent.data;
           else throw Error('something went wrong');
         } else throw Error('something went wrong');
