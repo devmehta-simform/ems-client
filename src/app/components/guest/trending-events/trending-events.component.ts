@@ -8,7 +8,7 @@ import { z } from 'zod';
 const EventsSchema = z.array(EventSchema);
 
 @Component({
-  selector: 'app-trending-events',
+  selector: 'app-guest-trending-events',
   imports: [EventComponent],
   templateUrl: './trending-events.component.html',
   styleUrl: './trending-events.component.css',

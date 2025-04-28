@@ -3,7 +3,7 @@ import { EventListComponent } from '../../event/event-list/event-list.component'
 import { TrendingEventsComponent } from '../trending-events/trending-events.component';
 
 @Component({
-  selector: 'app-explore',
+  selector: 'app-guest-explore',
   imports: [EventListComponent, TrendingEventsComponent],
   templateUrl: './explore.component.html',
   styleUrl: './explore.component.css',

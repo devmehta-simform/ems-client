@@ -3,7 +3,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 
 @Component({
-  selector: 'app-navbar',
+  selector: 'app-guest-navbar',
   imports: [RouterLink, RouterLinkActive],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',

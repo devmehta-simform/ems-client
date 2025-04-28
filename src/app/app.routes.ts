@@ -1,12 +1,13 @@
 import { Routes } from '@angular/router';
 import { AuthComponent } from './components/auth/auth.component';
-import { HomeComponent } from './components/guest/home/home.component';
+import { HomeComponent as GuestHomeComponent } from './components/guest/home/home.component';
 import { ExploreComponent } from './components/guest/explore/explore.component';
 import { UpcomingEventsComponent } from './components/guest/upcoming-events/upcoming-events.component';
 import { MyTicketsComponent } from './components/guest/my-tickets/my-tickets.component';
 import { EventDetailsComponent } from './components/event/event-details/event-details.component';
 // import { roleGuard } from './guards/role.guard';
 // import { RolesEnum } from '../response-types';
+import { HomeComponent as HostHomeComponent } from './components/host/home/home.component';
 
 export const routes: Routes = [
   {
@@ -21,7 +22,7 @@ export const routes: Routes = [
   },
   {
     path: 'guest',
-    component: HomeComponent,
+    component: GuestHomeComponent,
     // canActivate: [roleGuard],
     // data: {
     //   role: RolesEnum.Guest,
@@ -48,6 +49,15 @@ export const routes: Routes = [
         title: 'event-details',
       },
     ],
+    title: 'Home',
+  },
+  {
+    path: 'host',
+    component: HostHomeComponent,
+    // canActivate: [roleGuard],
+    // data: {
+    //   role: RolesEnum.Host,
+    // },
     title: 'Home',
   },
 ];
