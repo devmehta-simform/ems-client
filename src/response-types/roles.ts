@@ -8,4 +8,4 @@ const RolesEnum = {
 
 const RolesSchema = z.nativeEnum(RolesEnum);
 
-export { RolesSchema };
+export { RolesSchema, RolesEnum };
