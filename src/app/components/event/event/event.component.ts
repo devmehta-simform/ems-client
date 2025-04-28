@@ -3,10 +3,11 @@ import { EventSchema } from '../../../../response-types';
 import { DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { z } from 'zod';
+import { ImgFallbackDirective } from '../../../directives/img-fallback.directive';
 
 @Component({
   selector: 'app-event',
-  imports: [DatePipe, RouterLink],
+  imports: [DatePipe, RouterLink, ImgFallbackDirective],
   templateUrl: './event.component.html',
   styleUrl: './event.component.css',
 })

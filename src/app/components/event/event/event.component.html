@@ -1,6 +1,6 @@
 <div class="card w-64 mt-3 mb-3 hover:mr-2 hover:ml-2 hover:scale-105 transition-all bg-white shadow-md rounded-lg overflow-hidden">
   <div class="bg-gray-200 h-40 flex items-center justify-center">
-    <img [src]="event.images[0]" class="h-40 w-full" alt="" />
+    <img src="{{ event.images[0] }}" class="h-40 w-full" alt="" appImgFallback />
   </div>
   <div class="p-4 relative">
     <div class="absolute top-[-150px] left-3">

@@ -7,10 +7,11 @@ import { finalize, Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { z } from 'zod';
+import { ImgFallbackDirective } from '../../../directives/img-fallback.directive';
 
 @Component({
   selector: 'app-event-details',
-  imports: [AsyncPipe, CommonModule],
+  imports: [AsyncPipe, CommonModule, ImgFallbackDirective],
   templateUrl: './event-details.component.html',
   styleUrl: './event-details.component.css',
 })
