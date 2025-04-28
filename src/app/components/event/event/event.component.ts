@@ -1,13 +1,13 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { EventSchema } from '../../../../response-types';
-import { DatePipe } from '@angular/common';
+import { CurrencyPipe, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { z } from 'zod';
 import { ImgFallbackDirective } from '../../../directives/img-fallback.directive';
 
 @Component({
   selector: 'app-event',
-  imports: [DatePipe, RouterLink, ImgFallbackDirective],
+  imports: [DatePipe, RouterLink, ImgFallbackDirective, CurrencyPipe],
   templateUrl: './event.component.html',
   styleUrl: './event.component.css',
 })

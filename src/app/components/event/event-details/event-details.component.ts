@@ -4,14 +4,14 @@ import { EventDetailsSchema } from '../../../../response-types';
 import { EventService } from '../../../services/event.service';
 import { LoaderService } from '../../../services/loader.service';
 import { finalize, Observable } from 'rxjs';
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe, CurrencyPipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { z } from 'zod';
 import { ImgFallbackDirective } from '../../../directives/img-fallback.directive';
 
 @Component({
   selector: 'app-event-details',
-  imports: [AsyncPipe, CommonModule, ImgFallbackDirective],
+  imports: [AsyncPipe, CommonModule, ImgFallbackDirective, CurrencyPipe],
   templateUrl: './event-details.component.html',
   styleUrl: './event-details.component.css',
 })

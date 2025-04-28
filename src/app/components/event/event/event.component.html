@@ -15,7 +15,7 @@
     <a [routerLink]="'/guest/event-details/' + event.id">
       <div class="cursor-pointer flex justify-between items-center mb-2">
         <h2 class="text-base font-medium">{{ event.name }}</h2>
-        <p class="text-sm text-gray-600">From {{ event.ticketPrice }}</p>
+        <p class="text-sm text-gray-600">From {{ event.ticketPrice | currency }}</p>
       </div>
       <div class="flex items-center text-sm text-gray-600 mb-1">
         <img height="16" width="16" class="mr-2" src="icons/calendar.svg" alt="calendar" />
