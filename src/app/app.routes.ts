@@ -7,6 +7,7 @@ import { MyTicketsComponent } from './components/guest/my-tickets/my-tickets.com
 import { EventDetailsComponent } from './components/event/event-details/event-details.component';
 import { HomeComponent as HostHomeComponent } from './components/host/home/home.component';
 import { DashboardComponent as HostDashboardComponent } from './components/host/dashboard/dashboard.component';
+import { CreateEventComponent as HostCreateEventComponent } from './components/host/create-event/create-event.component';
 // import { roleGuard } from './guards/role.guard';
 // import { RolesEnum } from '../response-types';
 
@@ -64,6 +65,11 @@ export const routes: Routes = [
         path: 'dashboard',
         component: HostDashboardComponent,
         title: 'dashboard',
+      },
+      {
+        path: 'create-event',
+        component: HostCreateEventComponent,
+        title: 'create event',
       },
     ],
     title: 'Home',

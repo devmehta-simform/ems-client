@@ -2,7 +2,7 @@
 <button
   (click)="isVisible = !isVisible"
   type="button"
-  class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+  class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200">
   <img src="icons/hamburger_menu.svg" alt="" />
 </button>
 
@@ -12,7 +12,7 @@
   [class.translate-x-0]="isVisible"
   [class.-translate-x-full]="!isVisible"
   aria-label="Sidebar">
-  <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+  <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50">
     <ul class="space-y-2 font-medium">
       <li (click)="isVisible = !isVisible" class="sm:hidden">
         <img class="ml-auto" src="icons/close.svg" alt="" />
@@ -21,25 +21,39 @@
         <h1 class="font-bold text-center text-xl">EMS</h1>
       </li>
       <li class="cursor-pointer">
-        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
+        <a
+          (click)="isVisible = false"
+          routerLink="dashboard"
+          routerLinkActive="bg-gray-200 hover:bg-gray-200"
+          class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
           <img src="icons/dashboard.svg" alt="" />
           <span class="ms-3">Dashboard</span>
         </a>
       </li>
       <li class="cursor-pointer">
-        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
+        <a
+          (click)="isVisible = false"
+          routerLink="create-event"
+          routerLinkActive="bg-gray-200 hover:bg-gray-200"
+          class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
           <img src="icons/create_event.svg" alt="" />
           <span class="ms-3">Create Event</span>
         </a>
       </li>
       <li class="cursor-pointer">
-        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
+        <a
+          (click)="isVisible = false"
+          routerLinkActive="bg-gray-200 hover:bg-gray-200"
+          class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
           <img src="icons/event.svg" alt="" />
           <span class="ms-3">My Events</span>
         </a>
       </li>
       <li class="cursor-pointer">
-        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
+        <a
+          (click)="isVisible = false"
+          routerLinkActive="bg-gray-200 hover:bg-gray-200"
+          class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
           <img src="icons/group.svg" alt="" />
           <span class="ms-3">Teams</span>
         </a>
