@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { NavbarComponent } from '../navbar/navbar.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-host-home',
-  imports: [NavbarComponent, RouterOutlet],
+  imports: [SidebarComponent, RouterOutlet],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })

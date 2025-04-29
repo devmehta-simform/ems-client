@@ -66,7 +66,7 @@ export class AuthComponent implements OnInit {
               break;
             }
             case 'Host': {
-              this.router.navigate(['/host']).then(() => this.loaderService.hide());
+              this.router.navigate(['/host/dashboard']).then(() => this.loaderService.hide());
               break;
             }
             case 'Volunteer': {

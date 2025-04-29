@@ -1,0 +1,49 @@
+<!-- reference: https://flowbite.com/docs/components/sidebar/#dashboard-layout -->
+<button
+  (click)="isVisible = !isVisible"
+  type="button"
+  class="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
+  <img src="icons/hamburger_menu.svg" alt="" />
+</button>
+
+<aside
+  id="default-sidebar"
+  class="fixed top-0 left-0 z-40 w-full sm:w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
+  [class.translate-x-0]="isVisible"
+  [class.-translate-x-full]="!isVisible"
+  aria-label="Sidebar">
+  <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+    <ul class="space-y-2 font-medium">
+      <li (click)="isVisible = !isVisible" class="sm:hidden">
+        <img class="ml-auto" src="icons/close.svg" alt="" />
+      </li>
+      <li>
+        <h1 class="font-bold text-center text-xl">EMS</h1>
+      </li>
+      <li class="cursor-pointer">
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
+          <img src="icons/dashboard.svg" alt="" />
+          <span class="ms-3">Dashboard</span>
+        </a>
+      </li>
+      <li class="cursor-pointer">
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
+          <img src="icons/create_event.svg" alt="" />
+          <span class="ms-3">Create Event</span>
+        </a>
+      </li>
+      <li class="cursor-pointer">
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
+          <img src="icons/event.svg" alt="" />
+          <span class="ms-3">My Events</span>
+        </a>
+      </li>
+      <li class="cursor-pointer">
+        <a class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
+          <img src="icons/group.svg" alt="" />
+          <span class="ms-3">Teams</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</aside>
