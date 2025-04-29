@@ -1,1 +1,268 @@
-<p>create-event works!</p>
+<!-- event-form.component.html -->
+<div class="container mx-auto px-4 py-6 max-w-3xl">
+  <form class="space-y-6">
+    <!-- Upload Cover Section -->
+
+    <div class="collapse collapse-arrow bg-base-100 shadow-md mb-4">
+      <input type="checkbox" checked />
+      <div class="collapse-title p-4">
+        <div class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          <h2 class="text-lg font-medium">Upload cover</h2>
+        </div>
+      </div>
+      <div class="collapse-content px-4 pb-4">
+        <p class="text-sm text-gray-500">Upload the event cover to capture your audience's attention.</p>
+
+        <div class="mt-2 border-2 border-dashed border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center bg-gray-50 h-48">
+          <div class="flex flex-col items-center justify-center text-gray-400">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+        </div>
+
+        <div class="flex justify-between items-center mt-2">
+          <span class="text-xs text-gray-500">image_name.jpg</span>
+          <div class="flex gap-2">
+            <button type="button" class="btn btn-sm btn-ghost">Remove</button>
+            <button type="button" class="btn btn-sm btn-ghost">Change</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- General Information Section -->
+
+    <div class="collapse collapse-arrow bg-base-100 shadow-md mb-4">
+      <input type="checkbox" checked />
+      <div class="collapse-title p-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <h2 class="text-lg font-medium">General information</h2>
+          </div>
+        </div>
+      </div>
+      <div class="collapse-content px-4 pb-4">
+        <div class="space-y-4 mt-2">
+          <!-- Name -->
+          <div class="form-control w-full">
+            <label for class="label">
+              <span class="label-text font-medium">Name <span class="text-xs text-indigo-500 mb-1">Make it catchy and memorable.</span></span>
+            </label>
+            <input type="text" placeholder="Rock Revolt: A Fusion of Power and Passion" class="input input-bordered w-full" />
+          </div>
+
+          <!-- Description -->
+          <div class="form-control w-full">
+            <label class="label">
+              <span class="label-text font-medium"
+                >Description <span class="text-xs text-indigo-500 mb-1">Provide essential event details.</span></span
+              >
+            </label>
+
+            <textarea class="textarea textarea-bordered h-24 w-full" placeholder="Event description"></textarea>
+          </div>
+
+          <!-- Category -->
+          <div class="form-control w-full">
+            <label class="label">
+              <span class="label-text font-medium"
+                >Category <span class="text-xs text-indigo-500 mb-1">Choose the category for your event.</span></span
+              >
+            </label>
+
+            <select class="select select-bordered w-full">
+              <option selected>Music</option>
+              <option>Art</option>
+              <option>Sports</option>
+              <option>Business</option>
+              <option>Food & Drink</option>
+            </select>
+          </div>
+
+          <!-- Album -->
+          <div class="form-control w-full">
+            <label class="label">
+              <span class="label-text font-medium">Album <span class="text-xs text-indigo-500 mb-1">Upload images for your event.</span></span>
+            </label>
+
+            <div class="flex flex-wrap gap-3 mt-2">
+              <div class="w-16 h-16 bg-gray-100 rounded-md border border-gray-300 flex items-center justify-center">
+                <img src="images/fallback-img.jpg" alt="album image" class="w-full h-full object-cover rounded-md" />
+              </div>
+              <div class="w-16 h-16 bg-gray-100 rounded-md border border-gray-300 flex items-center justify-center">
+                <img src="images/fallback-img.jpg" alt="album image" class="w-full h-full object-cover rounded-md" />
+              </div>
+              <!-- <div class="w-16 h-16 bg-gray-100 rounded-md border border-gray-300 flex items-center justify-center">
+                <span class="loading loading-spinner loading-sm"></span>
+              </div> -->
+              <div class="w-16 h-16 bg-gray-100 rounded-md border border-gray-300 flex items-center justify-center cursor-pointer">
+                <span class="text-4xl text-gray-600">+</span>
+              </div>
+            </div>
+
+            <!-- <div class="flex gap-6 mt-2">
+              <span class="text-xs text-gray-500">Image-01.png</span>
+              <span class="text-xs text-gray-500">Image-03.png</span>
+              <span class="text-xs text-gray-500">Image-05.png</span>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Location and Time Section -->
+    <div class="collapse collapse-arrow bg-base-100 shadow-md mb-4">
+      <input type="checkbox" checked />
+      <div class="collapse-title p-4">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <img src="icons/location.svg" alt="" />
+            <h2 class="text-lg font-medium">Location and Time</h2>
+          </div>
+        </div>
+      </div>
+      <div class="collapse-content px-4 pb-4">
+        <div class="space-y-4 mt-2">
+          <!-- Location -->
+          <div>
+            <h3 class="font-medium mb-1">Location</h3>
+            <p class="text-xs text-gray-500 mb-2">You can choose the location or pinpoint it on the map.</p>
+
+            <div class="form-control w-full mb-3">
+              <label class="label pt-0">
+                <span class="label-text">Address</span>
+              </label>
+              <input type="text" placeholder="Address" class="input input-bordered w-full" />
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="form-control w-full">
+                <label class="label pt-0">
+                  <span class="label-text">City</span>
+                </label>
+                <select class="select select-bordered w-full">
+                  <option disabled selected>Select city</option>
+                </select>
+              </div>
+
+              <div class="form-control w-full">
+                <label class="label pt-0">
+                  <span class="label-text">State / Province</span>
+                </label>
+                <select class="select select-bordered w-full">
+                  <option disabled selected>Select state</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-control w-full mt-3">
+              <label class="label pt-0">
+                <span class="label-text">Country / Region</span>
+              </label>
+              <select class="select select-bordered w-full">
+                <option disabled selected>Select country</option>
+              </select>
+            </div>
+
+            <div class="w-full h-36 bg-gray-100 rounded-lg mt-3 flex items-center justify-center">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Time -->
+          <div>
+            <h3 class="font-medium mb-1">Time</h3>
+            <p class="text-xs text-gray-500 mb-2">Set the start time and end time for your event.</p>
+
+            <div class="form-control w-full mb-3">
+              <label class="label pt-0">
+                <span class="label-text">Time Zone</span>
+              </label>
+              <select class="select select-bordered w-full">
+                <option>(GMT-0800) United States (Los Angeles)</option>
+                <option>(GMT-0500) United States (New York)</option>
+                <option>(GMT+0000) United Kingdom (London)</option>
+              </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="label pt-0">
+                  <span class="label-text">Event Date</span>
+                </label>
+                <div class="input-group">
+                  <input type="text" placeholder="02/05/2023" class="input input-bordered w-full" />
+                  <button class="btn btn-square">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+              <div>
+                <label class="label pt-0">
+                  <span class="label-text">Start Time</span>
+                </label>
+                <div class="input-group">
+                  <input type="text" placeholder="10:00 AM" class="input input-bordered w-full" />
+                  <button class="btn btn-square">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div>
+                <label class="label pt-0">
+                  <span class="label-text">End Time</span>
+                </label>
+                <div class="input-group">
+                  <input type="text" placeholder="11:00 AM" class="input input-bordered w-full" />
+                  <button class="btn btn-square">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit Button -->
+    <!-- <div class="flex justify-end">
+      <button type="button" class="btn btn-primary px-6">Add Section</button>
+    </div> -->
+  </form>
+</div>

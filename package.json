@@ -31,6 +31,7 @@
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
     "@tailwindcss/postcss": "^4.0.17",
+    "country-state-city": "^3.2.1",
     "daisyui": "^5.0.9",
     "postcss": "^8.5.3",
     "rxjs": "~7.8.0",
