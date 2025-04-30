@@ -60,7 +60,7 @@
           <!-- Name -->
           <div class="form-control w-full">
             <label for class="label">
-              <span class="label-text font-medium">Name <span class="text-xs text-indigo-500 mb-1">Make it catchy and memorable.</span></span>
+              <span class="label-text font-medium">Name</span>
             </label>
             <input type="text" placeholder="Rock Revolt: A Fusion of Power and Passion" class="input input-bordered w-full" />
           </div>
@@ -68,35 +68,16 @@
           <!-- Description -->
           <div class="form-control w-full">
             <label class="label">
-              <span class="label-text font-medium"
-                >Description <span class="text-xs text-indigo-500 mb-1">Provide essential event details.</span></span
-              >
+              <span class="label-text font-medium">Description</span>
             </label>
 
             <textarea class="textarea textarea-bordered h-24 w-full" placeholder="Event description"></textarea>
           </div>
 
-          <!-- Category -->
-          <div class="form-control w-full">
-            <label class="label">
-              <span class="label-text font-medium"
-                >Category <span class="text-xs text-indigo-500 mb-1">Choose the category for your event.</span></span
-              >
-            </label>
-
-            <select class="select select-bordered w-full">
-              <option selected>Music</option>
-              <option>Art</option>
-              <option>Sports</option>
-              <option>Business</option>
-              <option>Food & Drink</option>
-            </select>
-          </div>
-
           <!-- Album -->
           <div class="form-control w-full">
             <label class="label">
-              <span class="label-text font-medium">Album <span class="text-xs text-indigo-500 mb-1">Upload images for your event.</span></span>
+              <span class="label-text font-medium">Album</span>
             </label>
 
             <div class="flex flex-wrap gap-3 mt-2">
@@ -106,9 +87,6 @@
               <div class="w-16 h-16 bg-gray-100 rounded-md border border-gray-300 flex items-center justify-center">
                 <img src="images/fallback-img.jpg" alt="album image" class="w-full h-full object-cover rounded-md" />
               </div>
-              <!-- <div class="w-16 h-16 bg-gray-100 rounded-md border border-gray-300 flex items-center justify-center">
-                <span class="loading loading-spinner loading-sm"></span>
-              </div> -->
               <div class="w-16 h-16 bg-gray-100 rounded-md border border-gray-300 flex items-center justify-center cursor-pointer">
                 <span class="text-4xl text-gray-600">+</span>
               </div>
@@ -119,6 +97,27 @@
               <span class="text-xs text-gray-500">Image-03.png</span>
               <span class="text-xs text-gray-500">Image-05.png</span>
             </div> -->
+          </div>
+
+          <!-- Ticket -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
+            <div>
+              <label class="label pt-0">
+                <span class="label-text">Number of Tickets Available</span>
+              </label>
+              <div class="input-group">
+                <input type="number" placeholder="100" class="input input-bordered w-full" />
+              </div>
+            </div>
+
+            <div>
+              <label class="label pt-0">
+                <span class="label-text">Ticket Price</span>
+              </label>
+              <div class="input-group">
+                <input type="number" placeholder="$ 50" class="input input-bordered w-full" />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -149,36 +148,44 @@
               <input type="text" placeholder="Address" class="input input-bordered w-full" />
             </div>
 
+            <div class="form-control w-full mt-3 mb-3">
+              <label class="label pt-0">
+                <span class="label-text">Country</span>
+              </label>
+              <select (change)="changeCountry($event)" class="select select-bordered w-full">
+                <option disabled selected>Select country</option>
+                @for (country of countries; track $index) {
+                  <option [value]="country.isoCode">{{ country.name }}</option>
+                }
+              </select>
+            </div>
+
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <div class="form-control w-full">
+                <label class="label pt-0">
+                  <span class="label-text">State</span>
+                </label>
+                <select (change)="changeState($event)" class="select select-bordered w-full">
+                  <option disabled selected>Select state</option>
+                  @for (state of states; track $index) {
+                    <option [value]="state.isoCode">{{ state.name }}</option>
+                  }
+                </select>
+              </div>
               <div class="form-control w-full">
                 <label class="label pt-0">
                   <span class="label-text">City</span>
                 </label>
                 <select class="select select-bordered w-full">
                   <option disabled selected>Select city</option>
-                </select>
-              </div>
-
-              <div class="form-control w-full">
-                <label class="label pt-0">
-                  <span class="label-text">State / Province</span>
-                </label>
-                <select class="select select-bordered w-full">
-                  <option disabled selected>Select state</option>
+                  @for (city of cities; track $index) {
+                    <option [value]="city.stateCode">{{ city.name }}</option>
+                  }
                 </select>
               </div>
             </div>
 
-            <div class="form-control w-full mt-3">
-              <label class="label pt-0">
-                <span class="label-text">Country / Region</span>
-              </label>
-              <select class="select select-bordered w-full">
-                <option disabled selected>Select country</option>
-              </select>
-            </div>
-
-            <div class="w-full h-36 bg-gray-100 rounded-lg mt-3 flex items-center justify-center">
+            <!-- <div class="w-full h-36 bg-gray-100 rounded-lg mt-3 flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   stroke-linecap="round"
@@ -187,24 +194,13 @@
                   d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
-            </div>
+            </div> -->
           </div>
 
           <!-- Time -->
           <div>
             <h3 class="font-medium mb-1">Time</h3>
-            <p class="text-xs text-gray-500 mb-2">Set the start time and end time for your event.</p>
-
-            <div class="form-control w-full mb-3">
-              <label class="label pt-0">
-                <span class="label-text">Time Zone</span>
-              </label>
-              <select class="select select-bordered w-full">
-                <option>(GMT-0800) United States (Los Angeles)</option>
-                <option>(GMT-0500) United States (New York)</option>
-                <option>(GMT+0000) United Kingdom (London)</option>
-              </select>
-            </div>
+            <p class="text-xs text-gray-500 mb-2">Set the date, start time and end time for your event.</p>
 
             <div class="grid grid-cols-2 gap-3">
               <div>
@@ -212,16 +208,7 @@
                   <span class="label-text">Event Date</span>
                 </label>
                 <div class="input-group">
-                  <input type="text" placeholder="02/05/2023" class="input input-bordered w-full" />
-                  <button class="btn btn-square">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                    </svg>
-                  </button>
+                  <input type="date" min="{{ today }}" class="input input-bordered w-full" />
                 </div>
               </div>
             </div>
@@ -232,12 +219,7 @@
                   <span class="label-text">Start Time</span>
                 </label>
                 <div class="input-group">
-                  <input type="text" placeholder="10:00 AM" class="input input-bordered w-full" />
-                  <button class="btn btn-square">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </button>
+                  <input type="time" placeholder="10:00 AM" class="input input-bordered w-full" />
                 </div>
               </div>
 
@@ -246,12 +228,7 @@
                   <span class="label-text">End Time</span>
                 </label>
                 <div class="input-group">
-                  <input type="text" placeholder="11:00 AM" class="input input-bordered w-full" />
-                  <button class="btn btn-square">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </button>
+                  <input type="time" placeholder="11:00 AM" class="input input-bordered w-full" />
                 </div>
               </div>
             </div>
