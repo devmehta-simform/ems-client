@@ -1,8 +1,7 @@
 <!-- event-form.component.html -->
 <div class="container mx-auto px-4 py-6 max-w-3xl">
-  <form class="space-y-6">
+  <form class="space-y-6" [formGroup]="form">
     <!-- Upload Cover Section -->
-
     <div class="collapse collapse-arrow bg-base-100 shadow-md mb-4">
       <input type="checkbox" checked />
       <div class="collapse-title p-4">
@@ -19,30 +18,45 @@
       </div>
       <div class="collapse-content px-4 pb-4">
         <p class="text-sm text-gray-500">Upload the event cover to capture your audience's attention.</p>
-
-        <div class="mt-2 border-2 border-dashed border-gray-300 rounded-lg p-4 flex flex-col items-center justify-center bg-gray-50 h-48">
-          <div class="flex flex-col items-center justify-center text-gray-400">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mb-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
+        <div
+          (drop)="dropHandler($event)"
+          (dragover)="dragOverHandler($event)"
+          class="mt-2 border-2 border-dashed border-gray-300 rounded-lg p-3 flex flex-col items-center justify-center bg-gray-50 h-80 relative overflow-hidden">
+          <img
+            [src]="getCoverImageUrl()"
+            alt=""
+            class="h-full w-full object-cover rounded-lg"
+            [class.hidden]="form.controls.coverImage.value === null" />
+          <div class="flex flex-col items-center justify-center text-gray-400 z-10">
+            <button [class.hidden]="form.controls.coverImage.value !== null" class="btn btn-ghost btn-lg" (click)="coverImageInput.click()">
+              upload image
+            </button>
           </div>
-        </div>
 
+          <input (change)="handleCoverImageInput($event)" type="file" accept="image/png, image/jpeg, image/jpg" class="hidden" #coverImageInput />
+        </div>
         <div class="flex justify-between items-center mt-2">
-          <span class="text-xs text-gray-500">image_name.jpg</span>
-          <div class="flex gap-2">
-            <button type="button" class="btn btn-sm btn-ghost">Remove</button>
-            <button type="button" class="btn btn-sm btn-ghost">Change</button>
+          <!-- <span class="text-xs text-gray-500"></span> -->
+          <div class="flex gap-2 ml-auto">
+            <button
+              type="button"
+              class="btn btn-sm btn-ghost"
+              [class.hidden]="form.controls.coverImage.value === null"
+              (click)="form.controls.coverImage.setValue(null)">
+              Remove
+            </button>
+            <button
+              type="button"
+              (click)="coverImageInput.click()"
+              class="btn btn-sm btn-ghost"
+              [class.hidden]="form.controls.coverImage.value === null">
+              Change
+            </button>
           </div>
         </div>
       </div>
     </div>
     <!-- General Information Section -->
-
     <div class="collapse collapse-arrow bg-base-100 shadow-md mb-4">
       <input type="checkbox" checked />
       <div class="collapse-title p-4">
@@ -62,43 +76,52 @@
             <label for class="label">
               <span class="label-text font-medium">Name</span>
             </label>
-            <input type="text" placeholder="Rock Revolt: A Fusion of Power and Passion" class="input input-bordered w-full" />
+            <input
+              [formControl]="form.controls.name"
+              type="text"
+              placeholder="Rock Revolt: A Fusion of Power and Passion"
+              class="input input-bordered w-full" />
           </div>
-
           <!-- Description -->
           <div class="form-control w-full">
             <label class="label">
               <span class="label-text font-medium">Description</span>
             </label>
-
-            <textarea class="textarea textarea-bordered h-24 w-full" placeholder="Event description"></textarea>
+            <textarea
+              [formControl]="form.controls.description"
+              class="textarea textarea-bordered h-24 w-full"
+              placeholder="Event description"></textarea>
           </div>
-
           <!-- Album -->
           <div class="form-control w-full">
             <label class="label">
               <span class="label-text font-medium">Album</span>
             </label>
-
             <div class="flex flex-wrap gap-3 mt-2">
-              <div class="w-16 h-16 bg-gray-100 rounded-md border border-gray-300 flex items-center justify-center">
-                <img src="images/fallback-img.jpg" alt="album image" class="w-full h-full object-cover rounded-md" />
-              </div>
-              <div class="w-16 h-16 bg-gray-100 rounded-md border border-gray-300 flex items-center justify-center">
-                <img src="images/fallback-img.jpg" alt="album image" class="w-full h-full object-cover rounded-md" />
-              </div>
-              <div class="w-16 h-16 bg-gray-100 rounded-md border border-gray-300 flex items-center justify-center cursor-pointer">
+              @for (image of form.controls.album.value; track $index) {
+                <div class="w-32 h-32 bg-gray-100 rounded-md border border-gray-300 flex items-center justify-center relative shadow-md">
+                  <img [src]="getAlbumImageUrl($index)" alt="album image" class="w-full h-full object-cover rounded-md" />
+                  <button
+                    (click)="removeImageFromAlbum($index)"
+                    class="absolute -top-2 -right-2 w-5 h-5 bg-red-300 rounded-full flex items-center justify-center shadow-sm cursor-pointer"
+                    type="button">
+                    <img src="icons/close.svg" class="h-3 w-3" />
+                  </button>
+                </div>
+              }
+              <div
+                (click)="albumFileInput.click()"
+                class="w-32 h-32 bg-gray-100 rounded-md border border-gray-300 flex items-center justify-center cursor-pointer shadow-md">
                 <span class="text-4xl text-gray-600">+</span>
+                <input (change)="handleAlbumInput($event)" type="file" class="hidden" #albumFileInput />
               </div>
             </div>
-
             <!-- <div class="flex gap-6 mt-2">
               <span class="text-xs text-gray-500">Image-01.png</span>
               <span class="text-xs text-gray-500">Image-03.png</span>
               <span class="text-xs text-gray-500">Image-05.png</span>
             </div> -->
           </div>
-
           <!-- Ticket -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
             <div>
@@ -106,23 +129,21 @@
                 <span class="label-text">Number of Tickets Available</span>
               </label>
               <div class="input-group">
-                <input type="number" placeholder="100" class="input input-bordered w-full" />
+                <input [formControl]="form.controls.numberOfTickets" type="number" placeholder="100" class="input input-bordered w-full" />
               </div>
             </div>
-
             <div>
               <label class="label pt-0">
                 <span class="label-text">Ticket Price</span>
               </label>
               <div class="input-group">
-                <input type="number" placeholder="$ 50" class="input input-bordered w-full" />
+                <input [formControl]="form.controls.ticketPrice" type="number" placeholder="$ 50" class="input input-bordered w-full" />
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-
     <!-- Location and Time Section -->
     <div class="collapse collapse-arrow bg-base-100 shadow-md mb-4">
       <input type="checkbox" checked />
@@ -140,33 +161,30 @@
           <div>
             <h3 class="font-medium mb-1">Location</h3>
             <p class="text-xs text-gray-500 mb-2">You can choose the location or pinpoint it on the map.</p>
-
             <div class="form-control w-full mb-3">
               <label class="label pt-0">
                 <span class="label-text">Address</span>
               </label>
-              <input type="text" placeholder="Address" class="input input-bordered w-full" />
+              <input [formControl]="form.controls.location.controls.address" type="text" placeholder="Address" class="input input-bordered w-full" />
             </div>
-
             <div class="form-control w-full mt-3 mb-3">
               <label class="label pt-0">
                 <span class="label-text">Country</span>
               </label>
-              <select (change)="changeCountry($event)" class="select select-bordered w-full">
-                <option disabled selected>Select country</option>
+              <select [formControl]="form.controls.location.controls.country" (change)="changeCountry($event)" class="select select-bordered w-full">
+                <option value="" disabled selected>Select country</option>
                 @for (country of countries; track $index) {
                   <option [value]="country.isoCode">{{ country.name }}</option>
                 }
               </select>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div class="form-control w-full">
                 <label class="label pt-0">
                   <span class="label-text">State</span>
                 </label>
-                <select (change)="changeState($event)" class="select select-bordered w-full">
-                  <option disabled selected>Select state</option>
+                <select [formControl]="form.controls.location.controls.state" (change)="changeState($event)" class="select select-bordered w-full">
+                  <option value="" disabled selected>Select state</option>
                   @for (state of states; track $index) {
                     <option [value]="state.isoCode">{{ state.name }}</option>
                   }
@@ -176,15 +194,14 @@
                 <label class="label pt-0">
                   <span class="label-text">City</span>
                 </label>
-                <select class="select select-bordered w-full">
-                  <option disabled selected>Select city</option>
+                <select [formControl]="form.controls.location.controls.city" class="select select-bordered w-full">
+                  <option value="" disabled selected>Select city</option>
                   @for (city of cities; track $index) {
                     <option [value]="city.stateCode">{{ city.name }}</option>
                   }
                 </select>
               </div>
             </div>
-
             <!-- <div class="w-full h-36 bg-gray-100 rounded-lg mt-3 flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
@@ -196,39 +213,40 @@
               </svg>
             </div> -->
           </div>
-
           <!-- Time -->
           <div>
             <h3 class="font-medium mb-1">Time</h3>
             <p class="text-xs text-gray-500 mb-2">Set the date, start time and end time for your event.</p>
-
             <div class="grid grid-cols-2 gap-3">
               <div>
                 <label class="label pt-0">
                   <span class="label-text">Event Date</span>
                 </label>
                 <div class="input-group">
-                  <input type="date" min="{{ today }}" class="input input-bordered w-full" />
+                  <input [formControl]="form.controls.dateOfEvent" type="date" min="{{ today }}" class="input input-bordered w-full" />
                 </div>
               </div>
             </div>
-
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3">
               <div>
                 <label class="label pt-0">
                   <span class="label-text">Start Time</span>
                 </label>
                 <div class="input-group">
-                  <input type="time" placeholder="10:00 AM" class="input input-bordered w-full" />
+                  <input [formControl]="form.controls.startTime" type="time" placeholder="10:00 AM" class="input input-bordered w-full" />
                 </div>
               </div>
-
               <div>
                 <label class="label pt-0">
                   <span class="label-text">End Time</span>
                 </label>
                 <div class="input-group">
-                  <input type="time" placeholder="11:00 AM" class="input input-bordered w-full" />
+                  <input
+                    [formControl]="form.controls.endTime"
+                    [min]="form.controls.endTime.value"
+                    type="time"
+                    placeholder="11:00 AM"
+                    class="input input-bordered w-full" />
                 </div>
               </div>
             </div>
