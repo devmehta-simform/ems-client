@@ -1,5 +1,5 @@
 <div *ngIf="event$ | async as event">
-  <div class="hero bg-base-200 rounded-lg mt-3" [style]="'background-image: url(' + event.images[0] + ');'">
+  <div class="hero bg-base-200 rounded-lg mt-3" [style]="'background-image: url(' + event.coverImage + ');'">
     <div class="hero-overlay rounded-lg object-cover"></div>
     <div class="hero-content text-center w-full text-neutral-content m-10">
       <div class="max-w-md flex flex-col justify-items-center items-center">
@@ -43,8 +43,8 @@
               </div>
               <div class="m-3 text-left">
                 <h3 class="font-bold uppercase">Place</h3>
-                <p>{{ event.venue }}</p>
-                <p>{{ event.venue }}</p>
+                <p>{{ event.address }}</p>
+                <p>{{ event.city }}, {{ event.state }}</p>
               </div>
             </div>
           </div>
@@ -84,7 +84,7 @@
               </div>
               <div class="m-3 text-left">
                 <h3 class="font-bold uppercase">Duration</h3>
-                <p>x hours</p>
+                <p>{{ event.duration }} hrs</p>
               </div>
             </div>
             <div class="flex flex-row self-stretch items-center bg-white shadow-md rounded-lg p-4 w-full">
@@ -116,7 +116,7 @@
               <div class="col-span-1">
                 <img
                   class="h-auto w-full rounded-lg transition-transform duration-200 ease-in-out active:fixed active:top-1/2 active:left-1/2 active:transform active:translate-x-[-50%] active:translate-y-[-50%] active:scale-110 hover:cursor-zoom-in"
-                  [src]="event.images[0]"
+                  [src]="event.coverImage"
                   alt=""
                   appImgFallback />
               </div>

@@ -175,44 +175,39 @@
           <div>
             <h3 class="font-medium mb-1">Location</h3>
             <p class="text-xs text-gray-500 mb-2">You can choose the location or pinpoint it on the map.</p>
-            <div class="form-control w-full mb-3">
-              <label class="label pt-0">
-                <span class="label-text">Address</span>
-              </label>
-              <input [formControl]="form.controls.location.controls.address" type="text" placeholder="Address" class="input input-bordered w-full" />
-              @if (form.controls.location.controls.address.touched && form.controls.location.controls.address.invalid) {
-                <div class="validator-hint text-red-400 font-bold">kindly enter event address *required</div>
-              }
-            </div>
-            <div class="form-control w-full mt-3 mb-3">
-              <label class="label pt-0">
-                <span class="label-text">Country</span>
-              </label>
-              <select [formControl]="form.controls.location.controls.country" (change)="changeCountry($event)" class="select select-bordered w-full">
-                <option value="" disabled selected>Select country</option>
-                @for (country of countries; track $index) {
-                  <option [value]="country.isoCode">{{ country.name }}</option>
-                }
-              </select>
-              @if (form.controls.location.controls.country.touched && form.controls.location.controls.country.invalid) {
-                <div class="validator-hint text-red-400 font-bold">kindly enter event country *required</div>
-              }
-            </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div class="form-control w-full">
-                <label class="label pt-0">
-                  <span class="label-text">State</span>
-                </label>
-                <select [formControl]="form.controls.location.controls.state" (change)="changeState($event)" class="select select-bordered w-full">
-                  <option value="" disabled selected>Select state</option>
-                  @for (state of states; track $index) {
-                    <option [value]="state.isoCode">{{ state.name }}</option>
+                <div class="form-control w-full mb-3">
+                  <label class="label pt-0">
+                    <span class="label-text">Address</span>
+                  </label>
+                  <input
+                    [formControl]="form.controls.location.controls.address"
+                    type="text"
+                    placeholder="Address"
+                    class="input input-bordered w-full" />
+                  @if (form.controls.location.controls.address.touched && form.controls.location.controls.address.invalid) {
+                    <div class="validator-hint text-red-400 font-bold">kindly enter event address *required</div>
                   }
-                </select>
-                @if (form.controls.location.controls.state.touched && form.controls.location.controls.state.invalid) {
-                  <div class="validator-hint text-red-400 font-bold">kindly enter event state *required</div>
-                }
+                </div>
               </div>
+              <div class="form-control w-full">
+                <div class="form-control w-full mb-3">
+                  <label class="label pt-0">
+                    <span class="label-text">Zipcode</span>
+                  </label>
+                  <input
+                    [formControl]="form.controls.location.controls.zipcode"
+                    type="text"
+                    placeholder="Zipcode"
+                    class="input input-bordered w-full" />
+                  @if (form.controls.location.controls.zipcode.touched && form.controls.location.controls.zipcode.invalid) {
+                    <div class="validator-hint text-red-400 font-bold">kindly enter zipcode of event address *required</div>
+                  }
+                </div>
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div class="form-control w-full">
                 <label class="label pt-0">
                   <span class="label-text">City</span>
@@ -227,6 +222,34 @@
                   <div class="validator-hint text-red-400 font-bold">kindly enter event city *required</div>
                 }
               </div>
+              <div class="form-control w-full">
+                <label class="label pt-0">
+                  <span class="label-text">State</span>
+                </label>
+                <select [formControl]="form.controls.location.controls.state" (change)="changeState($event)" class="select select-bordered w-full">
+                  <option value="" disabled selected>Select state</option>
+                  @for (state of states; track $index) {
+                    <option [value]="state.isoCode">{{ state.name }}</option>
+                  }
+                </select>
+                @if (form.controls.location.controls.state.touched && form.controls.location.controls.state.invalid) {
+                  <div class="validator-hint text-red-400 font-bold">kindly enter event state *required</div>
+                }
+              </div>
+            </div>
+            <div class="form-control w-full mt-3 mb-3">
+              <label class="label pt-0">
+                <span class="label-text">Country</span>
+              </label>
+              <select [formControl]="form.controls.location.controls.country" (change)="changeCountry($event)" class="select select-bordered w-full">
+                <option value="" disabled selected>Select country</option>
+                @for (country of countries; track $index) {
+                  <option [value]="country.isoCode">{{ country.name }}</option>
+                }
+              </select>
+              @if (form.controls.location.controls.country.touched && form.controls.location.controls.country.invalid) {
+                <div class="validator-hint text-red-400 font-bold">kindly enter event country *required</div>
+              }
             </div>
             <!-- <div class="w-full h-36 bg-gray-100 rounded-lg mt-3 flex items-center justify-center">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">

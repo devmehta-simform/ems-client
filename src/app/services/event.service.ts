@@ -38,11 +38,16 @@ export class EventService {
   getEventById(eventId: string): Observable<z.infer<typeof EventDetailsSchema>> {
     return this.httpClient.get(environment.API_BASE_URL + this.baseUrl + `/${eventId}`).pipe(
       map(response => {
-        if ('data' in response) {
-          const isEvent = EventDetailsSchema.safeParse(response.data);
+        if (response && typeof response === 'object' && 'data' in response && typeof response.data === 'object') {
+          const isEvent = EventDetailsSchema.safeParse({ ...response.data, duration: 0 });
           // console.log(isEvent.error);
-          if (isEvent.success) return isEvent.data;
-          else throw Error('something went wrong');
+          if (isEvent.success) {
+            const startTime = new Date(isEvent.data.startTime);
+            const endTime = new Date(isEvent.data.endTime);
+            const duration = (endTime.getTime() - startTime.getTime()) / (1000 * 60 * 60);
+            console.log(startTime, endTime, duration);
+            return { ...isEvent.data, duration };
+          } else throw Error('something went wrong');
         } else throw Error('something went wrong');
       }),
       catchError(err => {

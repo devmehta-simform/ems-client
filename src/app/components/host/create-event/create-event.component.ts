@@ -32,6 +32,7 @@ export class CreateEventComponent {
         country: new FormControl('', Validators.required),
         state: new FormControl('', Validators.required),
         city: new FormControl('', Validators.required),
+        zipcode: new FormControl('', Validators.required),
       }),
       coverImage: new FormControl<File | null>(null, Validators.required),
       album: new FormArray<FormControl<File | null>>([]),
