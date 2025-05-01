@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Country, State, City, type ICountry, type IState, type ICity } from 'country-state-city';
+import { EventService } from '../../../services/event.service';
 
 @Component({
   selector: 'app-create-event',
@@ -30,13 +31,13 @@ export class CreateEventComponent {
         state: new FormControl('', Validators.required),
         city: new FormControl('', Validators.required),
       }),
-      coverImage: new FormControl<File | null>(null),
-      album: new FormArray<FormControl<File | null>>([]),
+      coverImage: new FormControl<File | null>(null, Validators.required),
+      album: new FormArray<FormControl<File | null>>([], Validators.required),
     },
     { validators: this.endTimeValidator() }
   );
 
-  constructor() {
+  constructor(private eventService: EventService) {
     this.countries = Country.getAllCountries();
     this.form.valueChanges.subscribe(data => {
       console.log('something changed', data);
@@ -120,7 +121,7 @@ export class CreateEventComponent {
         // this.form.controls.album.setControl(0, new FormControl(ele.files[0]));
         this.form.controls.coverImage.setValue(ele.files[0]);
       } else {
-        this.form.controls.coverImage.setValue(null);
+        // this.form.controls.coverImage.setValue(null);
       }
     }
   }
@@ -132,7 +133,7 @@ export class CreateEventComponent {
         // this.form.controls.album.setControl(0, new FormControl(ele.files[0]));
         this.form.controls.album.push(new FormControl(ele.files[0]));
       } else {
-        this.form.controls.coverImage.setValue(null);
+        // this.form.controls.coverImage.setValue(null);
       }
     }
   }
@@ -149,5 +150,12 @@ export class CreateEventComponent {
 
   removeImageFromAlbum(i: number) {
     this.form.controls.album.removeAt(i);
+  }
+
+  handleSubmit() {
+    const img = this.form.controls.coverImage;
+    if (img.valid && img.value) {
+      alert(img.value.name);
+    }
   }
 }

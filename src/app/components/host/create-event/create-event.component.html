@@ -1,6 +1,6 @@
 <!-- event-form.component.html -->
 <div class="container mx-auto px-4 py-6 max-w-3xl">
-  <form class="space-y-6" [formGroup]="form">
+  <form class="space-y-6" [formGroup]="form" (ngSubmit)="handleSubmit()">
     <!-- Upload Cover Section -->
     <div class="collapse collapse-arrow bg-base-100 shadow-md mb-4">
       <input type="checkbox" checked />
@@ -28,11 +28,14 @@
             class="h-full w-full object-cover rounded-lg"
             [class.hidden]="form.controls.coverImage.value === null" />
           <div class="flex flex-col items-center justify-center text-gray-400 z-10">
-            <button [class.hidden]="form.controls.coverImage.value !== null" class="btn btn-ghost btn-lg" (click)="coverImageInput.click()">
+            <button
+              type="button"
+              [class.hidden]="form.controls.coverImage.value !== null"
+              class="btn btn-ghost btn-lg"
+              (click)="coverImageInput.click()">
               upload image
             </button>
           </div>
-
           <input (change)="handleCoverImageInput($event)" type="file" accept="image/png, image/jpeg, image/jpg" class="hidden" #coverImageInput />
         </div>
         <div class="flex justify-between items-center mt-2">
@@ -100,7 +103,7 @@
             <div class="flex flex-wrap gap-3 mt-2">
               @for (image of form.controls.album.value; track $index) {
                 <div class="w-32 h-32 bg-gray-100 rounded-md border border-gray-300 flex items-center justify-center relative shadow-md">
-                  <img [src]="getAlbumImageUrl($index)" alt="album image" class="w-full h-full object-cover rounded-md" />
+                  <img [src]="getAlbumImageUrl($index)" accept="" alt="album image" class="w-full h-full object-cover rounded-md" />
                   <button
                     (click)="removeImageFromAlbum($index)"
                     class="absolute -top-2 -right-2 w-5 h-5 bg-red-300 rounded-full flex items-center justify-center shadow-sm cursor-pointer"
@@ -113,7 +116,7 @@
                 (click)="albumFileInput.click()"
                 class="w-32 h-32 bg-gray-100 rounded-md border border-gray-300 flex items-center justify-center cursor-pointer shadow-md">
                 <span class="text-4xl text-gray-600">+</span>
-                <input (change)="handleAlbumInput($event)" type="file" class="hidden" #albumFileInput />
+                <input accept="image/png, image/jpeg, image/jpg" (change)="handleAlbumInput($event)" type="file" class="hidden" #albumFileInput />
               </div>
             </div>
             <!-- <div class="flex gap-6 mt-2">
@@ -256,8 +259,8 @@
     </div>
 
     <!-- Submit Button -->
-    <!-- <div class="flex justify-end">
-      <button type="button" class="btn btn-primary px-6">Add Section</button>
-    </div> -->
+    <div class="flex justify-center md:justify-end">
+      <button type="submit" class="w-full md:w-fit btn btn-neutral px-6">Add Event</button>
+    </div>
   </form>
 </div>
