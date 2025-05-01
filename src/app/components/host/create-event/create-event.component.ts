@@ -16,6 +16,8 @@ export class CreateEventComponent {
   cities!: ICity[];
   state!: IState;
   today: string = new Date().toISOString().split('T')[0];
+  coverImageUrl: string | null = null;
+  albumUrl: string[] = [];
   form = new FormGroup(
     {
       name: new FormControl('', Validators.required),
@@ -32,7 +34,7 @@ export class CreateEventComponent {
         city: new FormControl('', Validators.required),
       }),
       coverImage: new FormControl<File | null>(null, Validators.required),
-      album: new FormArray<FormControl<File | null>>([], Validators.required),
+      album: new FormArray<FormControl<File | null>>([]),
     },
     { validators: this.endTimeValidator() }
   );
@@ -100,12 +102,9 @@ export class CreateEventComponent {
             if (file) {
               console.log(`file[${i}].name = ${file.name}`, file);
               this.form.controls.coverImage.setValue(file);
+              this.getCoverImageUrl();
             }
           }
-        });
-      } else {
-        [...event.dataTransfer.files].forEach((file, i) => {
-          console.log(`file[${i}].name = ${file.name}`);
         });
       }
     }
@@ -120,6 +119,7 @@ export class CreateEventComponent {
       if (ele.files && ele.files.length) {
         // this.form.controls.album.setControl(0, new FormControl(ele.files[0]));
         this.form.controls.coverImage.setValue(ele.files[0]);
+        this.getCoverImageUrl();
       } else {
         // this.form.controls.coverImage.setValue(null);
       }
@@ -132,6 +132,7 @@ export class CreateEventComponent {
       if (ele.files && ele.files.length) {
         // this.form.controls.album.setControl(0, new FormControl(ele.files[0]));
         this.form.controls.album.push(new FormControl(ele.files[0]));
+        this.getAlbumImageUrl(this.form.controls.album.length - 1);
       } else {
         // this.form.controls.coverImage.setValue(null);
       }
@@ -140,22 +141,27 @@ export class CreateEventComponent {
 
   getCoverImageUrl() {
     const coverImage = this.form.controls.coverImage.value;
-    return coverImage ? URL.createObjectURL(coverImage) : null;
+    this.coverImageUrl = coverImage ? URL.createObjectURL(coverImage) : null;
   }
 
   getAlbumImageUrl(i: number) {
     const img = this.form.controls.album.value.at(i);
-    return img ? URL.createObjectURL(img) : null;
+    if (img) this.albumUrl[i] = URL.createObjectURL(img);
   }
 
   removeImageFromAlbum(i: number) {
     this.form.controls.album.removeAt(i);
+    this.albumUrl.splice(i, 1);
   }
 
   handleSubmit() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
     const img = this.form.controls.coverImage;
     if (img.valid && img.value) {
-      alert(img.value.name);
+      this.eventService.uploadImage(img.value);
     }
   }
 }

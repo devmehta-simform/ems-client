@@ -4,6 +4,7 @@ import { environment } from '../../environments/environment';
 import { catchError, map, Observable } from 'rxjs';
 import { EventDetailsSchema, EventSchema } from '../../response-types';
 import { z } from 'zod';
+import { CloudinaryService } from './cloudinary.service';
 
 const EventsSchema = z.array(EventSchema);
 
@@ -12,7 +13,11 @@ const EventsSchema = z.array(EventSchema);
 })
 export class EventService {
   private baseUrl = '/event';
-  constructor(private httpClient: HttpClient) {}
+
+  constructor(
+    private httpClient: HttpClient,
+    private cloudinaryService: CloudinaryService
+  ) {}
 
   getEvents(): Observable<z.infer<typeof EventsSchema>> {
     return this.httpClient.get(environment.API_BASE_URL + this.baseUrl).pipe(
@@ -45,5 +50,9 @@ export class EventService {
         return [];
       })
     );
+  }
+
+  uploadImage(img: File) {
+    this.cloudinaryService.upload(img);
   }
 }

@@ -22,11 +22,7 @@
           (drop)="dropHandler($event)"
           (dragover)="dragOverHandler($event)"
           class="mt-2 border-2 border-dashed border-gray-300 rounded-lg p-3 flex flex-col items-center justify-center bg-gray-50 h-80 relative overflow-hidden">
-          <img
-            [src]="getCoverImageUrl()"
-            alt=""
-            class="h-full w-full object-cover rounded-lg"
-            [class.hidden]="form.controls.coverImage.value === null" />
+          <img [src]="coverImageUrl" alt="" class="h-full w-full object-cover rounded-lg" [class.hidden]="form.controls.coverImage.value === null" />
           <div class="flex flex-col items-center justify-center text-gray-400 z-10">
             <button
               type="button"
@@ -37,6 +33,9 @@
             </button>
           </div>
           <input (change)="handleCoverImageInput($event)" type="file" accept="image/png, image/jpeg, image/jpg" class="hidden" #coverImageInput />
+          @if (form.controls.coverImage.value === null) {
+            <div class="validator-hint text-red-400 font-bold">kindly upload cover image *required</div>
+          }
         </div>
         <div class="flex justify-between items-center mt-2">
           <!-- <span class="text-xs text-gray-500"></span> -->
@@ -84,6 +83,9 @@
               type="text"
               placeholder="Rock Revolt: A Fusion of Power and Passion"
               class="input input-bordered w-full" />
+            @if (form.controls.name.touched && form.controls.name.invalid) {
+              <div class="validator-hint text-red-400 font-bold">kindly enter event name *required</div>
+            }
           </div>
           <!-- Description -->
           <div class="form-control w-full">
@@ -94,6 +96,9 @@
               [formControl]="form.controls.description"
               class="textarea textarea-bordered h-24 w-full"
               placeholder="Event description"></textarea>
+            @if (form.controls.description.touched && form.controls.description.invalid) {
+              <div class="validator-hint text-red-400 font-bold">kindly enter event description *required</div>
+            }
           </div>
           <!-- Album -->
           <div class="form-control w-full">
@@ -103,7 +108,7 @@
             <div class="flex flex-wrap gap-3 mt-2">
               @for (image of form.controls.album.value; track $index) {
                 <div class="w-32 h-32 bg-gray-100 rounded-md border border-gray-300 flex items-center justify-center relative shadow-md">
-                  <img [src]="getAlbumImageUrl($index)" accept="" alt="album image" class="w-full h-full object-cover rounded-md" />
+                  <img [src]="albumUrl[$index]" accept="" alt="album image" class="w-full h-full object-cover rounded-md" />
                   <button
                     (click)="removeImageFromAlbum($index)"
                     class="absolute -top-2 -right-2 w-5 h-5 bg-red-300 rounded-full flex items-center justify-center shadow-sm cursor-pointer"
@@ -133,6 +138,9 @@
               </label>
               <div class="input-group">
                 <input [formControl]="form.controls.numberOfTickets" type="number" placeholder="100" class="input input-bordered w-full" />
+                @if (form.controls.numberOfTickets.touched && form.controls.numberOfTickets.invalid) {
+                  <div class="validator-hint text-red-400 font-bold">kindly enter number of available tickets for event *required</div>
+                }
               </div>
             </div>
             <div>
@@ -141,6 +149,9 @@
               </label>
               <div class="input-group">
                 <input [formControl]="form.controls.ticketPrice" type="number" placeholder="$ 50" class="input input-bordered w-full" />
+                @if (form.controls.ticketPrice.touched && form.controls.ticketPrice.invalid) {
+                  <div class="validator-hint text-red-400 font-bold">kindly enter ticket price for event *required</div>
+                }
               </div>
             </div>
           </div>
@@ -169,6 +180,9 @@
                 <span class="label-text">Address</span>
               </label>
               <input [formControl]="form.controls.location.controls.address" type="text" placeholder="Address" class="input input-bordered w-full" />
+              @if (form.controls.location.controls.address.touched && form.controls.location.controls.address.invalid) {
+                <div class="validator-hint text-red-400 font-bold">kindly enter event address *required</div>
+              }
             </div>
             <div class="form-control w-full mt-3 mb-3">
               <label class="label pt-0">
@@ -180,6 +194,9 @@
                   <option [value]="country.isoCode">{{ country.name }}</option>
                 }
               </select>
+              @if (form.controls.location.controls.country.touched && form.controls.location.controls.country.invalid) {
+                <div class="validator-hint text-red-400 font-bold">kindly enter event country *required</div>
+              }
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div class="form-control w-full">
@@ -192,6 +209,9 @@
                     <option [value]="state.isoCode">{{ state.name }}</option>
                   }
                 </select>
+                @if (form.controls.location.controls.state.touched && form.controls.location.controls.state.invalid) {
+                  <div class="validator-hint text-red-400 font-bold">kindly enter event state *required</div>
+                }
               </div>
               <div class="form-control w-full">
                 <label class="label pt-0">
@@ -203,6 +223,9 @@
                     <option [value]="city.stateCode">{{ city.name }}</option>
                   }
                 </select>
+                @if (form.controls.location.controls.city.touched && form.controls.location.controls.city.invalid) {
+                  <div class="validator-hint text-red-400 font-bold">kindly enter event city *required</div>
+                }
               </div>
             </div>
             <!-- <div class="w-full h-36 bg-gray-100 rounded-lg mt-3 flex items-center justify-center">
@@ -227,6 +250,9 @@
                 </label>
                 <div class="input-group">
                   <input [formControl]="form.controls.dateOfEvent" type="date" min="{{ today }}" class="input input-bordered w-full" />
+                  @if (form.controls.dateOfEvent.touched && form.controls.dateOfEvent.invalid) {
+                    <div class="validator-hint text-red-400 font-bold">kindly enter date of event *required</div>
+                  }
                 </div>
               </div>
             </div>
@@ -237,6 +263,9 @@
                 </label>
                 <div class="input-group">
                   <input [formControl]="form.controls.startTime" type="time" placeholder="10:00 AM" class="input input-bordered w-full" />
+                  @if (form.controls.startTime.touched && form.controls.startTime.invalid) {
+                    <div class="validator-hint text-red-400 font-bold">kindly enter when event will start *required</div>
+                  }
                 </div>
               </div>
               <div>
@@ -250,6 +279,9 @@
                     type="time"
                     placeholder="11:00 AM"
                     class="input input-bordered w-full" />
+                  @if (form.controls.endTime.touched && form.controls.endTime.invalid) {
+                    <div class="validator-hint text-red-400 font-bold">kindly enter when event will end *required</div>
+                  }
                 </div>
               </div>
             </div>
