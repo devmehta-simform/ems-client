@@ -20,31 +20,29 @@ export class CreateEventComponent {
   albumUrl: string[] = [];
   form = new FormGroup(
     {
-      name: new FormControl('', Validators.required),
-      description: new FormControl('', Validators.required),
-      ticketPrice: new FormControl('', [Validators.required, Validators.min(1)]),
-      numberOfTickets: new FormControl('', [Validators.required, Validators.min(1)]),
-      dateOfEvent: new FormControl('', Validators.required),
-      startTime: new FormControl('', Validators.required),
-      endTime: new FormControl('', Validators.required),
-      location: new FormGroup({
-        address: new FormControl('', Validators.required),
-        country: new FormControl('', Validators.required),
-        state: new FormControl('', Validators.required),
-        city: new FormControl('', Validators.required),
-        zipcode: new FormControl('', Validators.required),
-      }),
-      coverImage: new FormControl<File | null>(null, Validators.required),
-      album: new FormArray<FormControl<File | null>>([]),
+      name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      description: new FormControl('', { nonNullable: true, validators: Validators.required }),
+      ticketPrice: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.min(1)] }),
+      numberOfTickets: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.min(1)] }),
+      dateOfEvent: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      startTime: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      endTime: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      address: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      country: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      state: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      city: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      zipcode: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+      coverImage: new FormControl<File | null>(null, { nonNullable: true, validators: [Validators.required] }),
+      images: new FormArray<FormControl<File>>([]),
     },
     { validators: this.endTimeValidator() }
   );
 
   constructor(private eventService: EventService) {
     this.countries = Country.getAllCountries();
-    this.form.valueChanges.subscribe(data => {
-      console.log('something changed', data);
-    });
+    // this.form.valueChanges.subscribe(data => {
+    //   console.log('something changed', data);
+    // });
   }
 
   getStates() {
@@ -132,8 +130,8 @@ export class CreateEventComponent {
     if (ele instanceof HTMLInputElement) {
       if (ele.files && ele.files.length) {
         // this.form.controls.album.setControl(0, new FormControl(ele.files[0]));
-        this.form.controls.album.push(new FormControl(ele.files[0]));
-        this.getAlbumImageUrl(this.form.controls.album.length - 1);
+        this.form.controls.images.push(new FormControl(ele.files[0], { nonNullable: true }));
+        this.getAlbumImageUrl(this.form.controls.images.length - 1);
       } else {
         // this.form.controls.coverImage.setValue(null);
       }
@@ -146,23 +144,33 @@ export class CreateEventComponent {
   }
 
   getAlbumImageUrl(i: number) {
-    const img = this.form.controls.album.value.at(i);
+    const img = this.form.controls.images.value.at(i);
     if (img) this.albumUrl[i] = URL.createObjectURL(img);
   }
 
   removeImageFromAlbum(i: number) {
-    this.form.controls.album.removeAt(i);
+    this.form.controls.images.removeAt(i);
     this.albumUrl.splice(i, 1);
   }
 
   handleSubmit() {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
+    const coverImage = this.form.controls.coverImage;
+    const images = this.form.controls.images;
+    const formValue = this.form.getRawValue();
+    if (this.form.valid && coverImage.valid && coverImage.value !== null && images.valid && images.value) {
+      const startTime = `${formValue.dateOfEvent}T${formValue.startTime}:00`;
+      const endTime = `${formValue.dateOfEvent}T${formValue.endTime}:00`;
+      const newFormValue = {
+        ...formValue,
+        startTime: new Date(startTime).toISOString(),
+        endTime: new Date(endTime).toISOString(),
+        dateOfEvent: new Date(formValue.dateOfEvent).toISOString(),
+        coverImage: undefined,
+        album: undefined,
+      };
+      this.eventService.create(newFormValue, coverImage.value, images.value);
     }
-    const img = this.form.controls.coverImage;
-    if (img.valid && img.value) {
-      this.eventService.uploadImage(img.value);
-    }
+    this.form.markAllAsTouched();
+    return;
   }
 }

@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { catchError, map, Observable } from 'rxjs';
+import { catchError, map, mergeMap, Observable } from 'rxjs';
 import { EventDetailsSchema, EventSchema } from '../../response-types';
 import { z } from 'zod';
 import { CloudinaryService } from './cloudinary.service';
+import { EventCreateDTO } from '../../dto';
 
 const EventsSchema = z.array(EventSchema);
 
@@ -56,8 +57,20 @@ export class EventService {
       })
     );
   }
-
-  uploadImage(img: File) {
-    this.cloudinaryService.upload(img);
+  create(data: unknown, coverImage: File, images: File[]) {
+    this.cloudinaryService
+      .upload([coverImage, ...images])
+      .pipe(
+        mergeMap(urls => {
+          if (data && typeof data === 'object') {
+            const reqBody = EventCreateDTO.safeParse({ ...data, coverImage: urls.splice(0, 1)[0], images: urls });
+            if (reqBody.success) return this.httpClient.post(environment.API_BASE_URL + this.baseUrl, reqBody.data);
+          }
+          return new Observable<undefined>();
+        })
+      )
+      .subscribe(data => {
+        console.log(data);
+      });
   }
 }
