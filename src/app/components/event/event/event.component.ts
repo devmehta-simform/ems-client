@@ -4,10 +4,11 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { z } from 'zod';
 import { ImgFallbackDirective } from '../../../directives/img-fallback.directive';
+import { CloudinaryImagePipe } from '../../../pipes/cloudinary-image.pipe';
 
 @Component({
   selector: 'app-event',
-  imports: [DatePipe, RouterLink, ImgFallbackDirective, CurrencyPipe],
+  imports: [DatePipe, RouterLink, ImgFallbackDirective, CurrencyPipe, CloudinaryImagePipe],
   templateUrl: './event.component.html',
   styleUrl: './event.component.css',
 })

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { catchError, map, mergeMap, Observable } from 'rxjs';
-import { EventDetailsSchema, EventSchema } from '../../response-types';
+import { EventSchema, EventDetailsSchema } from '../../response-types';
 import { z } from 'zod';
 import { CloudinaryService } from './cloudinary.service';
 import { EventCreateDTO } from '../../dto';
@@ -67,10 +67,24 @@ export class EventService {
             if (reqBody.success) return this.httpClient.post(environment.API_BASE_URL + this.baseUrl, reqBody.data);
           }
           return new Observable<undefined>();
+        }),
+        map(res => {
+          if (res && typeof res === 'object' && 'data' in res && res.data && typeof res.data === 'object') return { ...res.data, duration: 0 };
+          else return undefined;
+        }),
+        map(res => {
+          console.log();
+          const data = EventDetailsSchema.safeParse(res);
+          if (data.success) {
+            return data.data;
+          }
+          throw new Error(data.error.message);
+        }),
+        catchError(err => {
+          console.error(err);
+          return [];
         })
       )
-      .subscribe(data => {
-        console.log(data);
-      });
+      .subscribe();
   }
 }

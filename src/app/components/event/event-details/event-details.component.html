@@ -1,5 +1,5 @@
 <div *ngIf="event$ | async as event">
-  <div class="hero bg-base-200 rounded-lg mt-3" [style]="'background-image: url(' + event.coverImage + ');'">
+  <div class="hero bg-base-200 rounded-lg mt-3" [style]="'background-image: url(' + (event.coverImage | cloudinaryImage: 'event') + ');'">
     <div class="hero-overlay rounded-lg object-cover"></div>
     <div class="hero-content text-center w-full text-neutral-content m-10">
       <div class="max-w-md flex flex-col justify-items-center items-center">
@@ -49,7 +49,7 @@
             </div>
           </div>
           <div class="self-stretch">
-            <img class="h-auto w-full rounded-lg" [src]="event.images[0]" alt="" appImgFallback />
+            <img class="h-auto w-full rounded-lg" [src]="event.images[0] | cloudinaryImage: 'event'" alt="" appImgFallback />
           </div>
         </div>
       </div>
@@ -99,13 +99,7 @@
           </div>
           <div class="self-stretch">
             <p class="text-lg">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, repellendus ex nesciunt alias quasi aliquid delectus nihil odit ad iure
-              corrupti mollitia id vero nobis minus ipsam. Optio, minus qui! Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas omnis iusto
-              quasi aspernatur reiciendis, maiores minima, in id nostrum cumque officiis enim ea voluptas explicabo repellat deserunt sapiente dolor
-              esse. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Odio dolor obcaecati quia voluptate veritatis aut dolorem corporis.
-              Dolor beatae tempora esse quibusdam exercitationem nostrum odit, magni laborum quidem, voluptatibus blanditiis. Lorem ipsum dolor sit
-              amet consectetur adipisicing elit. Reprehenderit commodi eius deserunt incidunt. Praesentium id quae qui harum debitis nemo vel, rem
-              totam consequuntur molestiae cupiditate dolore, placeat minus dignissimos!
+              {{ event.description }}
             </p>
           </div>
           <div class="self-stretch text-2xl font-bold text-left mt-3">
@@ -116,7 +110,7 @@
               <div class="col-span-1">
                 <img
                   class="h-auto w-full rounded-lg transition-transform duration-200 ease-in-out active:fixed active:top-1/2 active:left-1/2 active:transform active:translate-x-[-50%] active:translate-y-[-50%] active:scale-110 hover:cursor-zoom-in"
-                  [src]="event.coverImage"
+                  [src]="event.coverImage | cloudinaryImage: 'event'"
                   alt=""
                   appImgFallback />
               </div>
@@ -125,22 +119,22 @@
                   @for (image of event.images; track $index) {
                     <img
                       class="h-auto w-full rounded-lg transition-transform duration-200 ease-in-out active:fixed active:top-1/2 active:left-1/2 active:transform active:translate-x-[-50%] active:translate-y-[-50%] active:scale-110 hover:cursor-zoom-in"
-                      [src]="image"
+                      [src]="image | cloudinaryImage: 'event'"
                       alt=""
                       appImgFallback />
                     <img
                       class="h-auto w-full rounded-lg transition-transform duration-200 ease-in-out active:fixed active:top-1/2 active:left-1/2 active:transform active:translate-x-[-50%] active:translate-y-[-50%] active:scale-110 hover:cursor-zoom-in"
-                      [src]="image"
+                      [src]="image | cloudinaryImage: 'event'"
                       alt=""
                       appImgFallback />
                     <img
                       class="h-auto w-full rounded-lg transition-transform duration-200 ease-in-out active:fixed active:top-1/2 active:left-1/2 active:transform active:translate-x-[-50%] active:translate-y-[-50%] active:scale-110 hover:cursor-zoom-in"
-                      [src]="image"
+                      [src]="image | cloudinaryImage: 'event'"
                       alt=""
                       appImgFallback />
                     <img
                       class="h-auto w-full rounded-lg transition-transform duration-200 ease-in-out active:fixed active:top-1/2 active:left-1/2 active:transform active:translate-x-[-50%] active:translate-y-[-50%] active:scale-110 hover:cursor-zoom-in"
-                      [src]="image"
+                      [src]="image | cloudinaryImage: 'event'"
                       alt=""
                       appImgFallback />
                   }

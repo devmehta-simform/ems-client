@@ -4,7 +4,7 @@ import { ReviewSchema } from './review';
 const EventSchema = z.object({
   name: z.string(),
   createdAt: z.string().datetime(),
-  images: z.array(z.string()),
+  coverImage: z.string(),
   ticketPrice: z.number().positive(),
   address: z.string(),
   zipcode: z.string(),

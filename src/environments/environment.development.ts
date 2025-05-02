@@ -3,4 +3,5 @@ export const environment = {
   CLOUDINARY_CLOUD_NAME: 'dlucxwxap',
   CLOUDINARY_API_SECRET: 'XTuQw0-ZlDTmv1fvgGXNWbaoYxI',
   CLOUDINARY_API_KEY: '679186333863751',
+  CLOUDINARY_EVENT_IMAGES_FOLDER_NAME: 'event_images',
 };

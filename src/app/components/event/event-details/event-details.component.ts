@@ -8,10 +8,11 @@ import { AsyncPipe, CurrencyPipe } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { z } from 'zod';
 import { ImgFallbackDirective } from '../../../directives/img-fallback.directive';
+import { CloudinaryImagePipe } from '../../../pipes/cloudinary-image.pipe';
 
 @Component({
   selector: 'app-event-details',
-  imports: [AsyncPipe, CommonModule, ImgFallbackDirective, CurrencyPipe],
+  imports: [AsyncPipe, CommonModule, ImgFallbackDirective, CurrencyPipe, CloudinaryImagePipe],
   templateUrl: './event-details.component.html',
   styleUrl: './event-details.component.css',
 })

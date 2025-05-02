@@ -20,7 +20,16 @@ export class CloudinaryService {
         formData.append('folder', 'event_images');
         return this.httpClient.post(this.cloudinaryUrl, formData).pipe(
           map(res => {
-            if (res && typeof res === 'object' && 'secure_url' in res && typeof res.secure_url === 'string') return res.secure_url;
+            if (
+              res &&
+              typeof res === 'object' &&
+              'public_id' in res &&
+              typeof res.public_id === 'string' &&
+              'format' in res &&
+              typeof res.format === 'string'
+            ) {
+              return res.public_id + '.' + res.format;
+            }
             return undefined;
           })
         );

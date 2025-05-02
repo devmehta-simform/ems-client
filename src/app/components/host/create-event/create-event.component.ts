@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Country, State, City, type ICountry, type IState, type ICity } from 'country-state-city';
 import { EventService } from '../../../services/event.service';
+import { LoaderService } from '../../../services/loader.service';
 
 @Component({
   selector: 'app-create-event',
@@ -38,11 +39,11 @@ export class CreateEventComponent {
     { validators: this.endTimeValidator() }
   );
 
-  constructor(private eventService: EventService) {
+  constructor(
+    private eventService: EventService,
+    private loaderService: LoaderService
+  ) {
     this.countries = Country.getAllCountries();
-    // this.form.valueChanges.subscribe(data => {
-    //   console.log('something changed', data);
-    // });
   }
 
   getStates() {
@@ -158,6 +159,7 @@ export class CreateEventComponent {
     const images = this.form.controls.images;
     const formValue = this.form.getRawValue();
     if (this.form.valid && coverImage.valid && coverImage.value !== null && images.valid && images.value) {
+      this.loaderService.show();
       const startTime = `${formValue.dateOfEvent}T${formValue.startTime}:00`;
       const endTime = `${formValue.dateOfEvent}T${formValue.endTime}:00`;
       const newFormValue = {
@@ -169,8 +171,9 @@ export class CreateEventComponent {
         album: undefined,
       };
       this.eventService.create(newFormValue, coverImage.value, images.value);
-    }
-    this.form.markAllAsTouched();
+      // this.form.reset();
+      this.loaderService.hide();
+    } else this.form.markAllAsTouched();
     return;
   }
 }
