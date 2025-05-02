@@ -1,7 +1,7 @@
 <div class="relative w-full px-8 md:px-15">
-  <div class="carousel gap-3 mt-3 rounded-box w-full overflow-x-auto">
+  <div class="carousel gap-3 mt-3 rounded-box w-full overflow-x-auto overflow-y-hidden">
     @for (event of eventList; track $index) {
-      <div class="carousel-item" [id]="'slide' + $index">
+      <div class="carousel-item h-auto m-1" [id]="'slide' + $index">
         <app-event [event]="event"></app-event>
       </div>
     }

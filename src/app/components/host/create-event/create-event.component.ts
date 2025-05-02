@@ -19,25 +19,22 @@ export class CreateEventComponent {
   today: string = new Date().toISOString().split('T')[0];
   coverImageUrl: string | null = null;
   albumUrl: string[] = [];
-  form = new FormGroup(
-    {
-      name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-      description: new FormControl('', { nonNullable: true, validators: Validators.required }),
-      ticketPrice: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.min(1)] }),
-      numberOfTickets: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.min(1)] }),
-      dateOfEvent: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-      startTime: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-      endTime: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-      address: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-      country: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-      state: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-      city: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-      zipcode: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-      coverImage: new FormControl<File | null>(null, { nonNullable: true, validators: [Validators.required] }),
-      images: new FormArray<FormControl<File>>([]),
-    },
-    { validators: this.endTimeValidator() }
-  );
+  form = new FormGroup({
+    name: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    description: new FormControl('', { nonNullable: true, validators: Validators.required }),
+    ticketPrice: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.min(1)] }),
+    numberOfTickets: new FormControl('', { nonNullable: true, validators: [Validators.required, Validators.min(1)] }),
+    dateOfEvent: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    startTime: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    endTime: new FormControl('', { nonNullable: true, validators: [Validators.required, this.endTimeValidator()] }),
+    address: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    country: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    state: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    city: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    zipcode: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
+    coverImage: new FormControl<File | null>(null, { nonNullable: true, validators: [Validators.required] }),
+    images: new FormArray<FormControl<File>>([]),
+  });
 
   constructor(
     private eventService: EventService,
@@ -80,11 +77,19 @@ export class CreateEventComponent {
 
   endTimeValidator() {
     return (control: AbstractControl): ValidationErrors | null => {
-      const startTime = control.get('startTime')?.value;
-      const endTime = control.get('endTime')?.value;
-
-      if (startTime && endTime && new Date(endTime) <= new Date(startTime)) {
-        return { endTimeInvalid: 'endTime should be after startTime' };
+      const dateOfEvent = this.form?.controls.dateOfEvent.value;
+      const startTime = this.form?.controls.startTime.value;
+      const endTime: string = control.value;
+      console.log(
+        startTime,
+        endTime,
+        dateOfEvent,
+        new Date(`${dateOfEvent}T${startTime}:00`),
+        new Date(`${dateOfEvent}T${endTime}:00`),
+        new Date(`${dateOfEvent}T${startTime}:00`) >= new Date(`${dateOfEvent}T${endTime}:00`)
+      );
+      if (startTime && endTime && new Date(`${dateOfEvent}T${startTime}:00`) >= new Date(`${dateOfEvent}T${endTime}:00`)) {
+        return { endTimeBeforeStartTime: 'endTime should be after startTime' };
       }
       return null;
     };

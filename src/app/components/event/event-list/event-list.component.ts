@@ -29,7 +29,7 @@ export class EventListComponent implements OnInit {
       .getEvents()
       .pipe(finalize(() => this.loaderService.hide()))
       .subscribe(data => {
-        this.eventList = [...data, ...data];
+        this.eventList = [...data];
       });
   }
 

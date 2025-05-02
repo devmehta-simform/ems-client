@@ -59,8 +59,9 @@ export class EventService {
       })
     );
   }
+
   create(data: unknown, coverImage: File, images: File[]) {
-    this.alertService.show('Now you sit back and relax. Will notify when event is created', 'info');
+    this.alertService.show('Now you may sit back and relax. Will notify when event is created', 'info');
     this.cloudinaryService
       .upload([coverImage, ...images])
       .pipe(

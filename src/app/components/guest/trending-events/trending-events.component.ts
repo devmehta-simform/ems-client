@@ -15,10 +15,12 @@ const EventsSchema = z.array(EventSchema);
 })
 export class TrendingEventsComponent implements OnInit {
   trendingEvents!: z.infer<typeof EventsSchema>;
+
   constructor(private eventService: EventService) {}
+
   ngOnInit() {
     this.eventService.getEvents().subscribe(data => {
-      this.trendingEvents = data;
+      this.trendingEvents = data.slice(0, 3);
     });
   }
 }

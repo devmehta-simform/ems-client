@@ -295,7 +295,11 @@
                     placeholder="11:00 AM"
                     class="input input-bordered w-full" />
                   @if (form.controls.endTime.touched && form.controls.endTime.invalid) {
-                    <div class="validator-hint text-red-400 font-bold">kindly enter when event will end *required</div>
+                    @if (form.controls.endTime.hasError('endTimeBeforeStartTime')) {
+                      <div class="validator-hint text-red-400 font-bold">kindly enter valid end time *required</div>
+                    } @else {
+                      <div class="validator-hint text-red-400 font-bold">kindly enter when event will end *required</div>
+                    }
                   }
                 </div>
               </div>
