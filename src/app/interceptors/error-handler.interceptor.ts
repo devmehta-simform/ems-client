@@ -13,7 +13,7 @@ export const errorHandlerInterceptor: HttpInterceptorFn = (req, next) => {
       if (res.status === 401) {
         router.navigate(['auth']);
       }
-      alertService.show(res.error.error.message);
+      alertService.show(res.error.error.message, 'error');
       return throwError(() => res.error);
     })
   );

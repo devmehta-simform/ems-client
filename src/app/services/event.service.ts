@@ -6,6 +6,7 @@ import { EventSchema, EventDetailsSchema } from '../../response-types';
 import { z } from 'zod';
 import { CloudinaryService } from './cloudinary.service';
 import { EventCreateDTO } from '../../dto';
+import { AlertService } from './alert.service';
 
 const EventsSchema = z.array(EventSchema);
 
@@ -17,7 +18,8 @@ export class EventService {
 
   constructor(
     private httpClient: HttpClient,
-    private cloudinaryService: CloudinaryService
+    private cloudinaryService: CloudinaryService,
+    private alertService: AlertService
   ) {}
 
   getEvents(): Observable<z.infer<typeof EventsSchema>> {
@@ -58,6 +60,7 @@ export class EventService {
     );
   }
   create(data: unknown, coverImage: File, images: File[]) {
+    this.alertService.show('Now you sit back and relax. Will notify when event is created', 'info');
     this.cloudinaryService
       .upload([coverImage, ...images])
       .pipe(
@@ -85,6 +88,8 @@ export class EventService {
           return [];
         })
       )
-      .subscribe();
+      .subscribe(() => {
+        this.alertService.show('event created successfully', 'success');
+      });
   }
 }

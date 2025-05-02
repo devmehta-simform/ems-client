@@ -15,7 +15,10 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   loader$!: Observable<boolean>;
-  alert$!: Observable<string>;
+  alert$!: Observable<{
+    message: string;
+    type: 'info' | 'success' | 'warning' | 'error';
+  }>;
 
   constructor(
     private loaderService: LoaderService,
@@ -25,6 +28,10 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.loader$ = this.loaderService.getLoader$();
     this.alert$ = this.alertService.getAlert$();
+  }
+
+  closeAlert() {
+    this.alertService.hide();
   }
 
   title = 'client';

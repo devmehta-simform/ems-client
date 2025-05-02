@@ -1,3 +1,7 @@
-<div role="alert" class="transition-all alert bg-red-200 border-2 border-red-500">
-  <span>Error! <ng-content></ng-content></span>
+<div
+  role="alert"
+  class="alert alert-{{ type }} fixed top-0 left-1/2 
+  transform -translate-x-1/2 w-full px-8 py-1 rounded-lg shadow-lg transition-all opacity-85 z-50">
+  <span>{{ message }}</span>
+  <button class="ml-auto btn btn-ghost" (click)="handleClose()">close</button>
 </div>

@@ -5,17 +5,17 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class AlertService {
-  private alert$ = new BehaviorSubject<string>('');
+  private alert$ = new BehaviorSubject<{ message: string; type: 'info' | 'success' | 'warning' | 'error' }>({
+    message: '',
+    type: 'error',
+  });
   getAlert$() {
     return this.alert$.asObservable();
   }
-  show(msg: string) {
-    this.alert$.next(msg);
-    setTimeout(() => {
-      this.hide();
-    }, 5 * 1000);
+  show(message: string, type: 'info' | 'success' | 'warning' | 'error' = 'error') {
+    this.alert$.next({ message, type });
   }
   hide() {
-    this.alert$.next('');
+    this.alert$.next({ message: '', type: 'error' });
   }
 }
