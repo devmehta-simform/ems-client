@@ -58,6 +58,30 @@
           <span class="ms-3">Teams</span>
         </a>
       </li>
+      <li class="relative cursor-pointer">
+        <div
+          (click)="
+            profileSection.classList.contains('hidden')
+              ? profileSection.classList.replace('hidden', 'block')
+              : profileSection.classList.add('block', 'hidden')
+          "
+          [class]="profileSection.classList.contains('hidden') ? '' : 'bg-gray-100 hover:bg-gray-100 '"
+          tabindex="0"
+          class="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 w-full focus:outline-none focus:ring-2 focus:ring-gray-200">
+          <img
+            [src]="
+              avatar ||
+              'https://images.steamusercontent.com/ugc/937185524768962464/98DD1D8BB7235A25054111C9436A9E11BF47F356/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'
+            "
+            alt="User Avatar"
+            class="w-8 h-8 rounded-full" />
+          <span class="ms-3">{{ username || 'host' }}</span>
+        </div>
+        <ul class="absolute z-50 mt-2 w-52 right-0 bg-white rounded-lg shadow-lg py-2 group-focus:block hidden" #profileSection>
+          <li><a class="block px-4 py-2 hover:bg-gray-100">Profile</a></li>
+          <li (click)="logoutUser()"><a class="block px-4 py-2 hover:bg-gray-100">Logout</a></li>
+        </ul>
+      </li>
     </ul>
   </div>
 </aside>

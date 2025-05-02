@@ -29,16 +29,20 @@
   </div>
   <div class="navbar-end">
     <div class="dropdown dropdown-end">
+      <span class="mr-2">{{ username || 'guest' }}</span>
       <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
         <div class="w-10 rounded-full">
           <img
-            alt="Tailwind CSS Navbar component"
-            src="https://images.steamusercontent.com/ugc/937185524768962464/98DD1D8BB7235A25054111C9436A9E11BF47F356/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false" />
+            alt="avatar"
+            [src]="
+              avatar ||
+              'https://images.steamusercontent.com/ugc/937185524768962464/98DD1D8BB7235A25054111C9436A9E11BF47F356/?imw=512&&ima=fit&impolicy=Letterbox&imcolor=%23000000&letterbox=false'
+            " />
         </div>
       </div>
       <ul tabindex="0" class="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
         <li>
-          <a class="justify-between"> Profile </a>
+          <a class="justify-between">Profile</a>
         </li>
         <li><a (click)="handleLogout()">Logout</a></li>
       </ul>
