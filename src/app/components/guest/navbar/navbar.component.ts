@@ -28,6 +28,7 @@ export class NavbarComponent {
       this.avatar = null;
     }
   }
+
   handleLogout() {
     this.userService.logout();
     this.router.navigate(['/auth']);

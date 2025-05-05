@@ -17,7 +17,7 @@ const EventsSchema = z.array(EventSchema);
 })
 export class EventListComponent implements OnInit {
   eventList!: z.infer<typeof EventsSchema>;
-  currentIndex = 1;
+  currentIndex = 0;
   constructor(
     private loaderService: LoaderService,
     private eventService: EventService
@@ -46,7 +46,7 @@ export class EventListComponent implements OnInit {
   scrollToCurrentSlide() {
     const element = document.getElementById('slide' + this.currentIndex);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
     }
   }
 }

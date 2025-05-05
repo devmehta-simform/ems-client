@@ -42,6 +42,7 @@ export class UserService {
     );
   }
   logout() {
+    localStorage.clear();
     return this.httpClient.post(environment.API_BASE_URL + this.baseUrl + '/logout', {}).subscribe();
   }
 }

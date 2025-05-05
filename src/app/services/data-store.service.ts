@@ -1,19 +1,20 @@
 import { Injectable } from '@angular/core';
 
-type DataStore = Record<string, unknown>;
-
 @Injectable({
   providedIn: 'root',
 })
 export class DataStoreService {
-  data: DataStore = {};
   addData(key: string, val: unknown) {
-    this.data[key] = val;
+    localStorage.setItem(key, JSON.stringify(val));
   }
+
   removeData(key: string) {
-    if (this.data[key]) delete this.data[key];
+    localStorage.removeItem(key);
   }
+
   getData(key: string) {
-    return this.data[key];
+    const val = localStorage.getItem(key);
+    if (val) return JSON.parse(val);
+    else return undefined;
   }
 }
