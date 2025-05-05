@@ -114,6 +114,7 @@ export class CreateEventComponent {
       }
     }
   }
+
   dragOverHandler(event: Event) {
     event.preventDefault();
   }
@@ -169,6 +170,8 @@ export class CreateEventComponent {
       const endTime = `${formValue.dateOfEvent}T${formValue.endTime}:00`;
       const newFormValue = {
         ...formValue,
+        state: State.getStateByCodeAndCountry(formValue.state, formValue.country)?.name,
+        country: Country.getCountryByCode(formValue.country)?.name,
         startTime: new Date(startTime).toISOString(),
         endTime: new Date(endTime).toISOString(),
         dateOfEvent: new Date(formValue.dateOfEvent).toISOString(),

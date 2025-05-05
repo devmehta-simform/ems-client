@@ -207,7 +207,7 @@
                 <select [formControl]="form.controls.city" class="select select-bordered w-full">
                   <option value="" disabled selected>Select city</option>
                   @for (city of cities; track $index) {
-                    <option [value]="city.stateCode">{{ city.name }}</option>
+                    <option [value]="city.name">{{ city.name }}</option>
                   }
                 </select>
                 @if (form.controls.city.touched && form.controls.city.invalid) {
