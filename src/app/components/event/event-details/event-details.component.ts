@@ -18,11 +18,13 @@ import { CloudinaryImagePipe } from '../../../pipes/cloudinary-image.pipe';
 })
 export class EventDetailsComponent implements OnInit {
   event$!: Observable<z.infer<typeof EventDetailsSchema>>;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private eventService: EventService,
     private loaderService: LoaderService
   ) {}
+
   ngOnInit() {
     this.loaderService.show();
     const eventId = this.activatedRoute.snapshot.params['eventId'];

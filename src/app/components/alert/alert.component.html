@@ -1,7 +1,7 @@
 <div
   role="alert"
-  class="alert alert-{{ type }} fixed top-0 left-1/2 mt-1 mb-1
-  transform -translate-x-1/2 w-full px-8 py-1 rounded-lg shadow-lg transition-all z-50">
+  class="alert fixed top-0 left-1/2 mt-1 mb-1 transform -translate-x-1/2 w-full px-8 py-1 rounded-lg shadow-lg transition-all z-50"
+  [class]="type === 'success' ? 'alert-success' : type === 'info' ? 'alert-info' : type === 'warning' ? 'alert-warning' : 'alert-error'">
   <span>{{ message }}</span>
   <button class="ml-auto btn btn-ghost" (click)="handleClose()">close</button>
 </div>
