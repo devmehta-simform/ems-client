@@ -4,7 +4,7 @@
   </div>
   <div class="p-4 relative flex-grow flex flex-col">
     <div class="absolute top-[-150px] left-3">
-      <button (click)="handleLike()" class="w-8 h-8 rounded-full bg-white bg-opacity-75 flex items-center justify-center">
+      <button (click)="handleLike()" class="w-8 h-8 rounded-full bg-white bg-opacity-75 flex items-center justify-center shadow-xl">
         <div class="flex justify-center items-center w-full h-full">
           <img [class.hidden]="heartStatus !== 'unfilled'" class="object-cover w-5 h-5" src="icons/unfilled-heart.svg" alt="heart" />
           <img [class.hidden]="heartStatus !== 'animate'" class="object-cover w-12 h-12" src="icons/animate-heart.gif" alt="heart" #animatedHeart />

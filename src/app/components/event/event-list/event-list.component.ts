@@ -30,6 +30,7 @@ export class EventListComponent implements OnInit {
       .pipe(finalize(() => this.loaderService.hide()))
       .subscribe(data => {
         this.eventList = [...data];
+        this.eventList.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
       });
   }
 

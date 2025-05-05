@@ -199,21 +199,22 @@
                 </div>
               </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div class="form-control w-full">
                 <label class="label pt-0">
-                  <span class="label-text">City</span>
+                  <span class="label-text">Country</span>
                 </label>
-                <select [formControl]="form.controls.city" class="select select-bordered w-full">
-                  <option value="" disabled selected>Select city</option>
-                  @for (city of cities; track $index) {
-                    <option [value]="city.name">{{ city.name }}</option>
+                <select [formControl]="form.controls.country" (change)="changeCountry($event)" class="select select-bordered w-full">
+                  <option value="" disabled selected>Select country</option>
+                  @for (country of countries; track $index) {
+                    <option [value]="country.isoCode">{{ country.name }}</option>
                   }
                 </select>
-                @if (form.controls.city.touched && form.controls.city.invalid) {
-                  <div class="validator-hint text-red-400 font-bold">kindly enter event city *required</div>
+                @if (form.controls.country.touched && form.controls.country.invalid) {
+                  <div class="validator-hint text-red-400 font-bold">kindly enter event country *required</div>
                 }
               </div>
+
               <div class="form-control w-full">
                 <label class="label pt-0">
                   <span class="label-text">State</span>
@@ -228,31 +229,21 @@
                   <div class="validator-hint text-red-400 font-bold">kindly enter event state *required</div>
                 }
               </div>
-            </div>
-            <div class="form-control w-full mt-3 mb-3">
-              <label class="label pt-0">
-                <span class="label-text">Country</span>
-              </label>
-              <select [formControl]="form.controls.country" (change)="changeCountry($event)" class="select select-bordered w-full">
-                <option value="" disabled selected>Select country</option>
-                @for (country of countries; track $index) {
-                  <option [value]="country.isoCode">{{ country.name }}</option>
+              <div class="form-control w-full">
+                <label class="label pt-0">
+                  <span class="label-text">City</span>
+                </label>
+                <select [formControl]="form.controls.city" class="select select-bordered w-full">
+                  <option value="" disabled selected>Select city</option>
+                  @for (city of cities; track $index) {
+                    <option [value]="city.name">{{ city.name }}</option>
+                  }
+                </select>
+                @if (form.controls.city.touched && form.controls.city.invalid) {
+                  <div class="validator-hint text-red-400 font-bold">kindly enter event city *required</div>
                 }
-              </select>
-              @if (form.controls.country.touched && form.controls.country.invalid) {
-                <div class="validator-hint text-red-400 font-bold">kindly enter event country *required</div>
-              }
+              </div>
             </div>
-            <!-- <div class="w-full h-36 bg-gray-100 rounded-lg mt-3 flex items-center justify-center">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-            </div> -->
           </div>
           <!-- Time -->
           <div>
