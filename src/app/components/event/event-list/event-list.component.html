@@ -1,15 +1,14 @@
-<div class="relative w-full px-8 md:px-15">
-  <div class="carousel gap-3 mt-3 rounded-box w-full overflow-x-auto overflow-y-hidden">
-    @for (event of eventList; track $index) {
-      <div class="carousel-item mb-5 h-80" [id]="'slide' + $index">
-        <app-event [event]="event"></app-event>
-      </div>
-    }
+<div class="relative w-full px-6 md:px-10">
+  <div class="overflow-x-auto scroll-smooth snap-x snap-mandatory md:overflow-x-hidden">
+    <div class="flex flex-row gap-4 mt-4 p-2">
+      @for (event of eventList; track $index) {
+        <div class="snap-start h-auto" [id]="'slide' + $index">
+          <app-event [event]="event"></app-event>
+        </div>
+      }
+    </div>
   </div>
-  <div class="absolute top-1/2 left-3 transform -translate-y-1/2 opacity-80">
-    <button (click)="prevSlide()" class="btn btn-circle btn-neutral">❮</button>
-  </div>
-  <div class="absolute top-1/2 right-3 transform -translate-y-1/2 opacity-80">
-    <button (click)="nextSlide()" class="btn btn-circle btn-neutral">❯</button>
-  </div>
+
+  <button (click)="prevSlide()" class="hidden md:block btn btn-circle btn-sm btn-neutral absolute top-1/2 left-2 z-10 opacity-80">❮</button>
+  <button (click)="nextSlide()" class="hidden md:block btn btn-circle btn-sm btn-neutral absolute top-1/2 right-2 z-10 opacity-80">❯</button>
 </div>
