@@ -5,18 +5,8 @@ import { environment } from '../../environments/environment';
   name: 'cloudinaryImage',
 })
 export class CloudinaryImagePipe implements PipeTransform {
-  transform(urlSuffix: string, type: 'event' | 'user'): string {
+  transform(urlSuffix: string): string {
     const baseUrl = 'https://res.cloudinary.com';
-    switch (type) {
-      case 'event': {
-        return baseUrl + '/' + environment.CLOUDINARY_CLOUD_NAME + '/' + 'image' + '/' + 'upload' + '/' + urlSuffix;
-      }
-      case 'user': {
-        return '';
-      }
-      default: {
-        return '';
-      }
-    }
+    return baseUrl + '/' + environment.CLOUDINARY_CLOUD_NAME + '/' + 'image' + '/' + 'upload' + '/' + urlSuffix;
   }
 }

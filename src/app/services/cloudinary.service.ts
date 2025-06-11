@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-// import { v2 as cloudinary } from 'cloudinary';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { forkJoin, map, Observable } from 'rxjs';
+
+export type FolderNames = 'event_images' | 'event_tickets';
 @Injectable({
   providedIn: 'root',
 })
@@ -11,13 +12,13 @@ export class CloudinaryService {
 
   constructor(private httpClient: HttpClient) {}
 
-  upload(files: File[]): Observable<(string | undefined)[]> {
+  upload(files: File[], folderName: FolderNames = 'event_images'): Observable<(string | undefined)[]> {
     const result = forkJoin(
       files.map(file => {
         const formData = new FormData();
         formData.append('file', file);
         formData.append('upload_preset', 'ems_event_images_preset');
-        formData.append('folder', 'event_images');
+        formData.append('folder', folderName);
         return this.httpClient.post(this.cloudinaryUrl, formData).pipe(
           map(res => {
             if (

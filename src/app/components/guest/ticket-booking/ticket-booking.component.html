@@ -1,0 +1,238 @@
+@if (event$ | async; as event) {
+  <div class="min-h-screen mx-auto px-4 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <div class="lg:col-span-2 space-y-6">
+        <div class="bg-white rounded-lg shadow-sm p-6">
+          <h1 class="text-2xl font-bold text-gray-900 mb-4">{{ event.name }}</h1>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-600">
+            <div class="flex items-center gap-2">
+              <div class="p-3 bg-blue-100 rounded-lg">
+                <img class="h-8 w-8" src="icons/calendar.svg" alt="" />
+              </div>
+              <div>
+                <div class="font-bold uppercase">DATE AND TIME</div>
+                <div>{{ event.dateOfEvent | date: 'fullDate' }}</div>
+                <div>{{ event.startTime | date: 'shortTime' }}</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-2">
+              <div class="p-3 bg-blue-100 rounded-lg">
+                <img class="h-8 w-8" src="icons/location.svg" alt="" />
+              </div>
+              <div>
+                <div class="font-bold uppercase">PLACE</div>
+                <div>{{ event.address }}</div>
+                <div>{{ event.city }}, {{ event.state }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="bg-white rounded-lg shadow-sm p-6">
+          <div class="flex justify-between items-center mb-4">
+            <h2 class="text-xl font-semibold text-gray-900">Contact information</h2>
+            <!-- <button class="text-blue-600 text-sm hover:underline">Log in</button> -->
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- <div class="form-control">
+              <label class="label">
+                <span class="label-text text-sm font-medium">First name</span>
+              </label>
+              <input type="text" placeholder="Amanda" class="input input-bordered bg-gray-50" />
+            </div> -->
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text text-sm font-medium">Name</span>
+              </label>
+              <input type="text" [value]="user.name" placeholder="Morty Smith" class="input input-bordered bg-gray-50" readonly />
+            </div>
+            <div class="form-control">
+              <label class="label">
+                <span class="label-text text-sm font-medium">Email</span>
+              </label>
+              <input type="email" [value]="user.email" placeholder="Amanda@gmail.com" class="input input-bordered bg-gray-50" readonly />
+            </div>
+            <!-- <div class="form-control">
+              <label class="label">
+                <span class="label-text text-sm font-medium">Phone number</span>
+              </label>
+              <input type="tel" placeholder="(754) 651-7073" class="input input-bordered bg-gray-50" />
+            </div> -->
+          </div>
+
+          <div class="mt-4 space-y-2">
+            <div class="form-control">
+              <label class="cursor-pointer flex items-start gap-2">
+                <input type="checkbox" class="checkbox checkbox-sm mt-1" />
+                <span class="text-sm text-gray-600">Keep me updated on this event</span>
+              </label>
+            </div>
+            <div class="form-control">
+              <label class="cursor-pointer flex items-start gap-2">
+                <input type="checkbox" class="checkbox checkbox-sm mt-1" />
+                <span class="text-sm text-gray-600">I agree with the Terms of Use & Privacy Policy</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ticket Section -->
+        <div class="bg-white rounded-lg shadow-sm p-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">Ticket</h2>
+
+          <div class="flex items-center justify-between bg-gray-50 rounded-lg p-4 mb-6">
+            <span class="text-gray-700">{{ event.ticketPrice | currency }} / Ticket</span>
+            <div class="flex items-center gap-2">
+              <button class="btn btn-sm btn-circle text-xl" [disabled]="this.qty < 1" (click)="this.qty = this.qty > 0 ? this.qty - 1 : 0">-</button>
+              <span class="px-3 py-1 bg-gray-600 text-white rounded">{{ qty }}</span>
+              <button
+                class="btn btn-sm btn-circle text-xl"
+                [disabled]="this.qty >= event.numberOfTickets - (event.numberOfTicketsSold ?? 0)"
+                (click)="this.qty = this.qty < event.numberOfTickets - (event.numberOfTicketsSold ?? 0) ? this.qty + 1 : this.qty">
+                +
+              </button>
+              <!-- {{ event.numberOfTicketsSold }} / {{}} -->
+            </div>
+          </div>
+
+          <!-- Ticket 1 -->
+          <!-- <div class="border rounded-lg p-4 mb-4">
+            <div class="flex items-center gap-2 mb-3">
+              <i class="fas fa-ticket-alt text-gray-400"></i>
+              <span class="font-medium">Ticket 1</span>
+              <span class="text-sm text-gray-500 ml-auto">Some contact information</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text text-sm">First name</span>
+                </label>
+                <input type="text" placeholder="Amanda" class="input input-bordered input-sm bg-gray-50" />
+              </div>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text text-sm">Last name</span>
+                </label>
+                <input type="text" placeholder="Smith" class="input input-bordered input-sm bg-gray-50" />
+              </div>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text text-sm">Email</span>
+                </label>
+                <input type="email" placeholder="Amanda@gmail.com" class="input input-bordered input-sm bg-gray-50" />
+              </div>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text text-sm">Phone number</span>
+                </label>
+                <input type="tel" placeholder="(754) 651-7073" class="input input-bordered input-sm bg-gray-50" />
+              </div>
+            </div>
+          </div> -->
+
+          <!-- Ticket 2 -->
+          <!-- <div class="border rounded-lg p-4 mb-4">
+            <div class="flex items-center gap-2 mb-3">
+              <i class="fas fa-ticket-alt text-gray-400"></i>
+              <span class="font-medium">Ticket 2</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text text-sm">First name</span>
+                </label>
+                <input type="text" placeholder="Charles" class="input input-bordered input-sm bg-gray-50" />
+              </div>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text text-sm">Last name</span>
+                </label>
+                <input type="text" placeholder="Sanchez" class="input input-bordered input-sm bg-gray-50" />
+              </div>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text text-sm">Email</span>
+                </label>
+                <input type="email" placeholder="Charles@gmail.com" class="input input-bordered input-sm bg-gray-50" />
+              </div>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text text-sm">Phone number</span>
+                </label>
+                <input type="tel" placeholder="(310) 714-9522" class="input input-bordered input-sm bg-gray-50" />
+              </div>
+            </div>
+          </div> -->
+
+          <!-- <button class="btn btn-ghost text-blue-600 gap-2">
+            <i class="fas fa-plus"></i>
+            Add ticket
+          </button> -->
+        </div>
+      </div>
+
+      <!-- Right Column - Summary -->
+      <div class="lg:col-span-1">
+        <div class="bg-white rounded-lg shadow-sm p-6 sticky top-6">
+          <h2 class="text-xl font-semibold text-gray-900 mb-4">Summary</h2>
+
+          <div class="space-y-3 mb-6">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-600">{{ qty }} x</span>
+              <span class="font-medium">{{ event.ticketPrice | currency }} / Ticket</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-600">Total</span>
+              <span class="font-medium">{{ qty * event.ticketPrice | currency }}</span>
+            </div>
+            <!-- <div class="flex justify-between items-center">
+              <span class="text-gray-600">Discount</span>
+              <div class="flex items-center gap-2">
+                <span class="badge badge-sm bg-gray-600 text-white">10%</span>
+                <span class="font-medium text-red-600">-$18</span>
+              </div>
+            </div>
+            <div class="divider my-4"></div>
+            <div class="flex justify-between items-center text-lg font-semibold">
+              <span>Total</span>
+              <span>$162</span>
+            </div> -->
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <label class="label">
+                <span class="label-text text-sm font-medium">Payment method</span>
+              </label>
+              <select class="select select-bordered w-full bg-gray-50">
+                <option>Charge</option>
+                <option>PayPal</option>
+                <option>Apple Pay</option>
+              </select>
+            </div>
+
+            <div class="bg-gray-50 rounded-lg p-4 flex items-center justify-between">
+              <div class="flex items-center gap-3">
+                <i class="fab fa-cc-mastercard text-2xl text-red-600"></i>
+                <span class="font-medium">Mastercard</span>
+              </div>
+              <span class="text-gray-600">•••• 6987</span>
+            </div>
+
+            <button
+              class="btn btn-primary w-full bg-gray-600 hover:bg-gray-700 hover:border-gray-700"
+              [disabled]="qty < 1"
+              (click)="handlePurchase(event)">
+              Buy now
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+}

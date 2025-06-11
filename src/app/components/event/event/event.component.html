@@ -1,6 +1,6 @@
 <div class="card w-64 bg-base-100 shadow-md transition-all hover:shadow-lg hover:-translate-y-1 rounded-xl flex flex-col h-full">
   <div class="relative h-40 bg-gray-200 overflow-hidden rounded-t-xl">
-    <img [src]="event.coverImage | cloudinaryImage: 'event'" class="h-full w-full object-cover rounded-t-xl" alt="" appImgFallback />
+    <img [src]="event.coverImage | cloudinaryImage" class="h-full w-full object-cover rounded-t-xl" alt="" appImgFallback />
     <button (click)="handleLike()" class="absolute top-2 left-2 w-8 h-8 rounded-full bg-white bg-opacity-80 flex items-center justify-center shadow">
       <img [class.hidden]="heartStatus !== 'unfilled'" class="w-5 h-5 object-cover" src="icons/unfilled-heart.svg" alt="heart" />
       <img [class.hidden]="heartStatus !== 'animate'" class="w-12 h-12 object-cover" src="icons/animate-heart.gif" alt="heart" #animatedHeart />

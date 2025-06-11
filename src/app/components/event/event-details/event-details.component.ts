@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { EventDetailsSchema } from '../../../../response-types';
 import { EventService } from '../../../services/event.service';
 import { LoaderService } from '../../../services/loader.service';
@@ -12,7 +12,7 @@ import { CloudinaryImagePipe } from '../../../pipes/cloudinary-image.pipe';
 
 @Component({
   selector: 'app-event-details',
-  imports: [AsyncPipe, CommonModule, ImgFallbackDirective, CurrencyPipe, CloudinaryImagePipe],
+  imports: [AsyncPipe, CommonModule, ImgFallbackDirective, CurrencyPipe, CloudinaryImagePipe, RouterLink],
   templateUrl: './event-details.component.html',
   styleUrl: './event-details.component.css',
 })

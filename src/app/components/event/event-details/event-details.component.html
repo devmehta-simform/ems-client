@@ -1,5 +1,5 @@
 <div *ngIf="event$ | async as event">
-  <div class="hero bg-base-200 rounded-lg mt-3" [style]="'background-image: url(' + (event.coverImage | cloudinaryImage: 'event') + ');'">
+  <div class="hero bg-base-200 rounded-lg mt-3" [style]="'background-image: url(' + (event.coverImage | cloudinaryImage) + ');'">
     <div class="hero-overlay rounded-lg object-cover"></div>
     <div class="hero-content text-center w-full text-neutral-content m-10">
       <div class="max-w-md flex flex-col justify-items-center items-center">
@@ -49,7 +49,7 @@
             </div>
           </div>
           <div class="self-stretch">
-            <img class="h-auto w-full rounded-lg" [src]="event.images[0] | cloudinaryImage: 'event'" alt="" appImgFallback />
+            <img class="h-auto w-full rounded-lg" [src]="event.images[0] | cloudinaryImage" alt="" appImgFallback />
           </div>
         </div>
       </div>
@@ -69,7 +69,7 @@
               </div>
             </div>
           </div>
-          <button class="btn btn-neutral">Purchase Ticket</button>
+          <a class="btn btn-neutral" [routerLink]="'/guest/ticket-booking/' + event.id" [state]="{ event }">Purchase Ticket</a>
         </div>
       </div>
     </div>
@@ -108,12 +108,12 @@
           <div class="self-stretch">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-2">
               <div class="col-span-1">
-                <img class="h-auto w-full rounded-lg" [src]="event.coverImage | cloudinaryImage: 'event'" alt="" appImgFallback />
+                <img class="h-auto w-full rounded-lg" [src]="event.coverImage | cloudinaryImage" alt="" appImgFallback />
               </div>
               <div class="col-span-1">
                 <div class="grid lg:grid-cols-2 gap-2">
                   @for (image of event.images.slice(0, 1); track $index) {
-                    <img class="h-auto w-full rounded-lg" [src]="image | cloudinaryImage: 'event'" alt="" appImgFallback />
+                    <img class="h-auto w-full rounded-lg" [src]="image | cloudinaryImage" alt="" appImgFallback />
                   }
                 </div>
               </div>
