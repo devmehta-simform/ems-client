@@ -9,10 +9,11 @@ import { CommonModule } from '@angular/common';
 import { z } from 'zod';
 import { ImgFallbackDirective } from '../../../directives/img-fallback.directive';
 import { CloudinaryImagePipe } from '../../../pipes/cloudinary-image.pipe';
+import { TimeDurationPipe } from '../../../pipes/time-duration.pipe';
 
 @Component({
   selector: 'app-event-details',
-  imports: [AsyncPipe, CommonModule, ImgFallbackDirective, CurrencyPipe, CloudinaryImagePipe, RouterLink],
+  imports: [AsyncPipe, CommonModule, ImgFallbackDirective, CurrencyPipe, CloudinaryImagePipe, RouterLink, TimeDurationPipe],
   templateUrl: './event-details.component.html',
   styleUrl: './event-details.component.css',
 })

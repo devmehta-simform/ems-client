@@ -31,7 +31,7 @@
             <div class="space-y-1">
               <h2 class="font-bold text-gray-900 text-base truncate max-w-[12rem]">{{ ticket.event.name }}</h2>
               <h3 class="font-semibold text-gray-800 text-sm">
-                {{ ticket.event.dateOfEvent | date: 'mediumDate' }} | {{ ticket.event.dateOfEvent | date: 'shortTime' }}
+                {{ ticket.event.dateOfEvent | date: 'mediumDate' }} | {{ ticket.event.startTime | date: 'shortTime' }}
               </h3>
               <p class="text-sm text-gray-600">{{ ticket.event.ticketPrice | currency }}</p>
             </div>

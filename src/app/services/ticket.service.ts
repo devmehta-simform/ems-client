@@ -4,7 +4,7 @@ import { environment } from '../../environments/environment';
 import { z } from 'zod';
 import { TicketCreateSchema } from '../../dto/ticketCreateDTO';
 import { DataStoreService } from './data-store.service';
-import { map } from 'rxjs';
+import { catchError, map } from 'rxjs';
 import { TicketSchema } from '../../response-types/tickets';
 
 @Injectable({
@@ -25,12 +25,19 @@ export class TicketService {
   getAllTicketsForUser() {
     return this.httpClient.get(environment.API_BASE_URL + this.baseUrl + '/' + this.dataStoreService.getData('user').id).pipe(
       map(data => {
-        const res = z.array(TicketSchema).safeParse(data);
-        if (res.error) {
-          console.log(res.error);
-          throw Error('something went wrong');
-        }
-        return res.data;
+        console.log(data);
+        if (data && 'data' in data && typeof data.data === 'object') {
+          const res = z.array(TicketSchema).safeParse(data.data);
+          if (res.error) {
+            console.log(res.error);
+            throw Error('something went wrong');
+          }
+          return res.data;
+        } else throw Error('something went wrong');
+      }),
+      catchError(err => {
+        console.error(err);
+        return [];
       })
     );
   }

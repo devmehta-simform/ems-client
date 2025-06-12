@@ -17,5 +17,5 @@ export const TicketSchema = z.object({
   eventId: z.string(),
   bookingDate: z.string().datetime(),
   qrCode: z.string(),
-  event: EventDetailsSchema.omit({ duration: true }),
+  event: EventDetailsSchema,
 });

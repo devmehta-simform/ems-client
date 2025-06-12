@@ -34,7 +34,6 @@ const EventDetailsSchema = z.object({
   startTime: z.string().datetime(),
   endTime: z.string().datetime(),
   review: ReviewSchema.optional(),
-  duration: z.number(),
 });
 
 export { EventDetailsSchema, EventSchema };
