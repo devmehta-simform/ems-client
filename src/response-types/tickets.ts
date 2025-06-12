@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { EventSchema } from './event';
+import { EventDetailsSchema } from './event';
 
 const BookingStatus = {
   Purchased: 'Purchased',
@@ -17,5 +17,5 @@ export const TicketSchema = z.object({
   eventId: z.string(),
   bookingDate: z.string().datetime(),
   qrCode: z.string(),
-  event: EventSchema,
+  event: EventDetailsSchema.omit({ duration: true }),
 });

@@ -1,0 +1,73 @@
+@if (ticket$ | async; as ticket) {
+  <div class="max-w-5xl rounded-2xl shadow-sm min-h-screen mx-auto bg-white p-6 mt-3 mb-3">
+    <!-- Header -->
+    <div class="flex items-start justify-between">
+      <div>
+        <button routerLink="/guest/my-tickets" class="flex items-center space-x-2">
+          <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+          <p class="text-sm text-gray-500 bg-gray-100 p-1 rounded-sm uppercase">
+            {{ ticket.event.dateOfEvent | date: 'MMMM d' }} | {{ ticket.event.dateOfEvent | date: 'shortTime' }}
+          </p>
+        </button>
+        <h2 class="text-2xl font-bold text-gray-900">{{ ticket.event.name }}</h2>
+      </div>
+    </div>
+
+    <!-- Content Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+      <!-- Event Image -->
+      <div class="lg:col-span-2">
+        <div class="h-64 bg-gray-200 rounded-xl overflow-hidden">
+          <img [src]="ticket.event.coverImage | cloudinaryImage" alt="Event cover" class="w-full h-full object-cover" />
+        </div>
+      </div>
+
+      <!-- Event Info -->
+      <div class="space-y-4">
+        <div>
+          <p class="text-xs font-semibold text-gray-500 uppercase mb-1">Date and Time</p>
+          <p class="text-sm font-medium">{{ ticket.event.dateOfEvent | date: 'fullDate' }}</p>
+          <p class="text-sm font-medium">{{ ticket.event.dateOfEvent | date: 'shortTime' }}</p>
+        </div>
+
+        <div>
+          <p class="text-xs font-semibold text-gray-500 uppercase mb-1">Duration</p>
+          <p class="text-sm font-medium">5 hours</p>
+        </div>
+
+        <div>
+          <p class="text-xs font-semibold text-gray-500 uppercase mb-1">Place</p>
+          <p class="text-sm">{{ ticket.event.address }}</p>
+        </div>
+
+        <div>
+          <p class="text-xs font-semibold text-gray-500 uppercase mb-1">2 Tickets</p>
+          <p class="text-sm">Email eTicket</p>
+        </div>
+
+        <button routerLink="/guest/event-details/{{ ticket.eventId }}" class="text-sm text-blue-600 underline">View event details</button>
+      </div>
+    </div>
+
+    <!-- QR Code Section -->
+    <div class="mt-10 lg:mt-40 p-6 bg-gray-100 rounded-xl">
+      <h3 class="text-lg font-semibold mb-4">Your Ticket QR Code</h3>
+
+      <div class="flex flex-col items-center">
+        <div class="bg-white p-4 border-2 border-gray-300 rounded-lg mb-4">
+          <img [src]="ticket.qrCode | cloudinaryImage" alt="QR Code" class="w-48 h-48" #qrCode />
+        </div>
+
+        <p class="text-xs text-gray-500 mb-4">Present this QR code at the venue entrance</p>
+
+        <button
+          [cdkCopyToClipboard]="qrCode.src"
+          class="btn btn-dash btn-accent border border-gray-300 text-gray-700 py-2 px-4 rounded-md text-sm font-medium">
+          Copy Ticket Link
+        </button>
+      </div>
+    </div>
+  </div>
+}

@@ -27,6 +27,7 @@ export class TicketService {
       map(data => {
         const res = z.array(TicketSchema).safeParse(data);
         if (res.error) {
+          console.log(res.error);
           throw Error('something went wrong');
         }
         return res.data;

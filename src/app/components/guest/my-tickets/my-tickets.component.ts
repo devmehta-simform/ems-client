@@ -5,10 +5,11 @@ import { TicketSchema } from '../../../../response-types/tickets';
 import { TicketService } from '../../../services/ticket.service';
 import { AsyncPipe, CurrencyPipe, DatePipe } from '@angular/common';
 import { CloudinaryImagePipe } from '../../../pipes/cloudinary-image.pipe';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-guest-my-tickets',
-  imports: [AsyncPipe, CloudinaryImagePipe, DatePipe, CurrencyPipe],
+  imports: [AsyncPipe, CloudinaryImagePipe, DatePipe, CurrencyPipe, RouterLink],
   templateUrl: './my-tickets.component.html',
   styleUrl: './my-tickets.component.css',
 })

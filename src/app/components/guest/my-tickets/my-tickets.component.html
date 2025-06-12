@@ -19,7 +19,10 @@
 
     <div class="flex-1 overflow-y-auto space-y-4 pb-4">
       @for (ticket of tickets; track $index) {
-        <div class="bg-white rounded-xl p-4 shadow-sm flex gap-4 min-h-[10rem]">
+        <div
+          [routerLink]="'/guest/my-tickets/' + ticket.ticketId"
+          [state]="{ ticket }"
+          class="bg-white rounded-xl p-4 shadow-sm flex gap-4 min-h-[10rem] hover:cursor-pointer">
           <div class="w-20 h-20 bg-gray-200 rounded-lg overflow-hidden flex-shrink-0">
             <img [src]="ticket.event.coverImage | cloudinaryImage" alt="Event cover" class="w-full h-full object-cover" />
           </div>
