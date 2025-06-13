@@ -25,13 +25,33 @@ export class TicketService {
   getAllTicketsForUser() {
     return this.httpClient.get(environment.API_BASE_URL + this.baseUrl + '/' + this.dataStoreService.getData('user').id).pipe(
       map(data => {
-        console.log(data);
+        // console.log(data);
         if (data && 'data' in data && typeof data.data === 'object') {
           const res = z.array(TicketSchema).safeParse(data.data);
           if (res.error) {
             console.log(res.error);
             throw Error('something went wrong');
           }
+          return res.data;
+        } else throw Error('something went wrong');
+      }),
+      catchError(err => {
+        console.error(err);
+        return [];
+      })
+    );
+  }
+
+  getTicket(ticketId: string, userId: string) {
+    return this.httpClient.get(environment.API_BASE_URL + this.baseUrl + '/' + userId + '/' + ticketId).pipe(
+      map(data => {
+        if (data && 'data' in data && typeof data.data === 'object') {
+          const res = TicketSchema.safeParse(data.data);
+          if (res.error) {
+            console.log(res.error);
+            throw Error('something went wrong');
+          }
+          // console.log(res.data);
           return res.data;
         } else throw Error('something went wrong');
       }),

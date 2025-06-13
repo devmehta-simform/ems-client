@@ -10,11 +10,11 @@ export class LoaderService {
     return this.loader$.asObservable();
   }
   show() {
-    console.log('show');
+    // console.log('show');
     setTimeout(() => this.loader$.next(true));
   }
   hide() {
-    console.log('hide');
+    // console.log('hide');
     setTimeout(() => this.loader$.next(false));
   }
 }

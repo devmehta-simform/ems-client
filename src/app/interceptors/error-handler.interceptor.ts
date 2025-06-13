@@ -1,20 +1,26 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { catchError, finalize } from 'rxjs';
 import { AlertService } from '../services/alert.service';
 import { Router } from '@angular/router';
+import { LoaderService } from '../services/loader.service';
 
 export const errorHandlerInterceptor: HttpInterceptorFn = (req, next) => {
+  const loaderService = inject(LoaderService);
   const alertService = inject(AlertService);
   const router = inject(Router);
+  loaderService.show();
   return next(req).pipe(
     catchError((res: HttpErrorResponse) => {
-      console.error(res);
-      if (res.status === 401) {
-        router.navigate(['auth']);
+      if (res.status >= 400) {
+        console.error(res);
+        if (res.status === 401) {
+          router.navigate(['auth']);
+        }
+        alertService.show(res.error.error.message, 'error');
       }
-      alertService.show(res.error.error.message, 'error');
-      return throwError(() => res.error);
-    })
+      return [];
+    }),
+    finalize(() => loaderService.hide())
   );
 };

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Country, State, City, type ICountry, type IState, type ICity } from 'country-state-city';
 import { EventService } from '../../../services/event.service';
-import { LoaderService } from '../../../services/loader.service';
 
 @Component({
   selector: 'app-create-event',
@@ -36,10 +35,7 @@ export class CreateEventComponent {
     images: new FormArray<FormControl<File>>([]),
   });
 
-  constructor(
-    private eventService: EventService,
-    private loaderService: LoaderService
-  ) {
+  constructor(private eventService: EventService) {
     this.countries = Country.getAllCountries();
   }
 
@@ -80,15 +76,15 @@ export class CreateEventComponent {
       const dateOfEvent = this.form?.controls.dateOfEvent.value;
       const startTime = this.form?.controls.startTime.value;
       const endTime: string = control.value;
-      console.log(
-        startTime,
-        endTime,
-        dateOfEvent,
-        new Date(`${dateOfEvent}T${startTime}:00`),
-        new Date(`${dateOfEvent}T${endTime}:00`),
-        new Date(`${dateOfEvent}T${startTime}:00`) >= new Date(`${dateOfEvent}T${endTime}:00`)
-      );
-      if (startTime && endTime && new Date(`${dateOfEvent}T${startTime}:00`) >= new Date(`${dateOfEvent}T${endTime}:00`)) {
+      // console.log(
+      //   startTime,
+      //   endTime,
+      //   dateOfEvent,
+      //   new Date(`${dateOfEvent}T${startTime}:00`),
+      //   new Date(`${dateOfEvent}T${endTime}:00`),
+      //   new Date(`${dateOfEvent}T${startTime}:00`) > new Date(`${dateOfEvent}T${endTime}:00`)
+      // );
+      if (startTime && endTime && new Date(`${dateOfEvent}T${startTime}:00`) > new Date(`${dateOfEvent}T${endTime}:00`)) {
         return { endTimeBeforeStartTime: 'endTime should be after startTime' };
       }
       return null;
@@ -165,7 +161,6 @@ export class CreateEventComponent {
     const images = this.form.controls.images;
     const formValue = this.form.getRawValue();
     if (this.form.valid && coverImage.valid && coverImage.value !== null && images.valid && images.value) {
-      this.loaderService.show();
       const startTime = `${formValue.dateOfEvent}T${formValue.startTime}:00`;
       const endTime = `${formValue.dateOfEvent}T${formValue.endTime}:00`;
       const newFormValue = {
@@ -180,7 +175,6 @@ export class CreateEventComponent {
       };
       this.eventService.create(newFormValue, coverImage.value, images.value);
       // this.form.reset();
-      this.loaderService.hide();
     } else this.form.markAllAsTouched();
     return;
   }

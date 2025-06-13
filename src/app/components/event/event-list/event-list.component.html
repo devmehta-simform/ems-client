@@ -1,14 +1,16 @@
-<div class="relative w-full px-6 md:px-10">
-  <div class="overflow-x-auto scroll-smooth snap-x snap-mandatory md:overflow-x-hidden">
-    <div class="flex flex-row gap-4 mt-4 p-2">
-      @for (event of eventList; track $index) {
-        <div class="snap-start h-auto" [id]="'slide' + $index">
-          <app-event [event]="event"></app-event>
-        </div>
-      }
+@if (eventList$ | async; as eventList) {
+  <div class="relative w-full px-6 md:px-10">
+    <div class="overflow-x-auto scroll-smooth snap-x snap-mandatory md:overflow-x-hidden">
+      <div class="flex flex-row gap-4 mt-4 p-2">
+        @for (event of eventList; track $index) {
+          <div class="snap-start h-auto" [id]="'slide' + $index">
+            <app-event [event]="event"></app-event>
+          </div>
+        }
+      </div>
     </div>
-  </div>
 
-  <button (click)="prevSlide()" class="hidden md:block btn btn-circle btn-sm btn-neutral absolute top-1/2 left-2 z-10 opacity-80">❮</button>
-  <button (click)="nextSlide()" class="hidden md:block btn btn-circle btn-sm btn-neutral absolute top-1/2 right-2 z-10 opacity-80">❯</button>
-</div>
+    <button (click)="prevSlide()" class="hidden md:block btn btn-circle btn-sm btn-neutral absolute top-1/2 left-2 z-10 opacity-80">❮</button>
+    <button (click)="nextSlide()" class="hidden md:block btn btn-circle btn-sm btn-neutral absolute top-1/2 right-2 z-10 opacity-80">❯</button>
+  </div>
+}

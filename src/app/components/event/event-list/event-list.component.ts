@@ -3,35 +3,28 @@ import { EventService } from '../../../services/event.service';
 import { EventComponent } from '../event/event.component';
 import { EventSchema } from '../../../../response-types';
 import { z } from 'zod';
-import { LoaderService } from '../../../services/loader.service';
-import { finalize } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 const EventsSchema = z.array(EventSchema);
 
 @Component({
   selector: 'app-event-list',
-  imports: [EventComponent],
+  imports: [EventComponent, AsyncPipe],
   templateUrl: './event-list.component.html',
   styleUrl: './event-list.component.css',
 })
 export class EventListComponent implements OnInit {
-  eventList!: z.infer<typeof EventsSchema>;
+  eventList$!: Observable<z.infer<typeof EventsSchema>>;
+  private eventList!: z.infer<typeof EventsSchema>;
   currentIndex = 0;
-  constructor(
-    private loaderService: LoaderService,
-    private eventService: EventService
-  ) {}
+  constructor(private eventService: EventService) {}
 
   ngOnInit() {
-    this.loaderService.show();
-    this.eventService
+    this.eventList$ = this.eventService
       .getEvents()
-      .pipe(finalize(() => this.loaderService.hide()))
-      .subscribe(data => {
-        this.eventList = [...data];
-        this.eventList.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
-      });
+      .pipe(map(data => (this.eventList = data.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()))));
   }
 
   prevSlide() {

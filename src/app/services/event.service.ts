@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { catchError, map, mergeMap, Observable } from 'rxjs';
+import { catchError, map, mergeMap, Observable, take, tap } from 'rxjs';
 import { EventSchema, EventDetailsSchema } from '../../response-types';
 import { z } from 'zod';
 import { CloudinaryService } from './cloudinary.service';
@@ -60,10 +60,11 @@ export class EventService {
     this.cloudinaryService
       .upload([coverImage, ...images])
       .pipe(
+        take(1),
         mergeMap(urls => {
           if (data && typeof data === 'object') {
             const reqBody = EventCreateDTO.safeParse({ ...data, coverImage: urls.splice(0, 1)[0], images: urls });
-            if (reqBody.success) return this.httpClient.post(environment.API_BASE_URL + this.baseUrl, reqBody.data);
+            if (reqBody.success) return this.httpClient.post(environment.API_BASE_URL + this.baseUrl, reqBody.data).pipe(take(1));
           }
           return new Observable<undefined>();
         }),
@@ -79,13 +80,12 @@ export class EventService {
           }
           throw new Error(data.error.message);
         }),
+        tap(() => this.alertService.show('event created successfully', 'success')),
         catchError(err => {
           console.error(err);
           return [];
         })
       )
-      .subscribe(() => {
-        this.alertService.show('event created successfully', 'success');
-      });
+      .subscribe();
   }
 }

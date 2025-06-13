@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { map, Observable } from 'rxjs';
+import { Router, RouterLink } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { z } from 'zod';
 import { TicketSchema } from '../../../../response-types/tickets';
 import { AsyncPipe, DatePipe, DecimalPipe } from '@angular/common';
 import { CloudinaryImagePipe } from '../../../pipes/cloudinary-image.pipe';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { TimeDurationPipe } from '../../../pipes/time-duration.pipe';
+import { TicketService } from '../../../services/ticket.service';
 
 @Component({
   selector: 'app-ticket-details',
@@ -16,7 +17,15 @@ import { TimeDurationPipe } from '../../../pipes/time-duration.pipe';
 })
 export class TicketDetailsComponent {
   ticket$: Observable<z.infer<typeof TicketSchema>>;
-  constructor(private activatedRoute: ActivatedRoute) {
-    this.ticket$ = this.activatedRoute.paramMap.pipe(map(() => window.history.state.ticket));
+  constructor(
+    private router: Router,
+    private ticketService: TicketService
+  ) {
+    const ticket = this.router.getCurrentNavigation()?.extras?.state?.['ticket'];
+    if (ticket) this.ticket$ = of(ticket);
+    else {
+      const ids = this.router.getCurrentNavigation()?.extras?.state?.['ids'];
+      this.ticket$ = this.ticketService.getTicket(ids?.ticketId, ids?.userId);
+    }
   }
 }

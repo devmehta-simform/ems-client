@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { map, Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { z } from 'zod';
 import { EventDetailsSchema } from '../../../../response-types';
 import { AsyncPipe, CurrencyPipe, DatePipe } from '@angular/common';
@@ -20,11 +20,11 @@ export class TicketBookingComponent {
   user: z.infer<typeof UserLoginResponseSchema>;
   qty = 0;
   constructor(
-    private activatedRoute: ActivatedRoute,
+    private router: Router,
     private dataStoreService: DataStoreService,
     private qrService: QrService
   ) {
-    this.event$ = this.activatedRoute.paramMap.pipe(map(() => window.history.state.event));
+    this.event$ = of(this.router.getCurrentNavigation()?.extras?.state?.['event']);
     this.user = this.dataStoreService.getData('user');
   }
 

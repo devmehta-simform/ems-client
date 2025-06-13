@@ -5,6 +5,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router, RouterEvent } from '@angular/router';
 import { LoaderService } from '../../services/loader.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-auth',
@@ -54,31 +55,36 @@ export class AuthComponent implements OnInit {
     if (this.authForm.valid) {
       if (this.isRegister) {
         this.loaderService.show();
-        this.userService.register(this.authForm.getRawValue()).subscribe(() => {
-          this.router.navigate(['/auth'], { queryParams: { register: false } });
-        });
+        this.userService
+          .register(this.authForm.getRawValue())
+          .pipe(take(1))
+          .subscribe(() => {
+            this.router.navigate(['/auth'], { queryParams: { register: false } });
+          });
       } else {
         this.loaderService.show();
-        this.userService.login(this.authForm.getRawValue()).subscribe(user => {
-          switch (user.role) {
-            case 'Guest': {
-              this.router.navigate(['/guest/explore']).then(() => this.loaderService.hide());
-              break;
+        this.userService
+          .login(this.authForm.getRawValue())
+          .pipe(take(1))
+          .subscribe(user => {
+            switch (user.role) {
+              case 'Guest': {
+                this.router.navigate(['/guest/explore']).then(() => this.loaderService.hide());
+                break;
+              }
+              case 'Host': {
+                this.router.navigate(['/host/dashboard']).then(() => this.loaderService.hide());
+                break;
+              }
+              case 'Volunteer': {
+                break;
+              }
+              default: {
+                const check: never = user.role;
+                return check;
+              }
             }
-            case 'Host': {
-              this.router.navigate(['/host/dashboard']).then(() => this.loaderService.hide());
-              break;
-            }
-            case 'Volunteer': {
-              break;
-            }
-            default: {
-              /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
-              const check: never = user.role;
-              break;
-            }
-          }
-        });
+          });
       }
     }
   }
