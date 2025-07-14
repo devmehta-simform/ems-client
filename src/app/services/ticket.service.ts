@@ -18,8 +18,8 @@ export class TicketService {
     private dataStoreService: DataStoreService
   ) {}
 
-  create(data: z.infer<typeof TicketCreateSchema>) {
-    return this.httpClient.post(environment.API_BASE_URL + this.baseUrl, data);
+  create(data: z.infer<typeof TicketCreateSchema>, qty: number) {
+    return this.httpClient.post(environment.API_BASE_URL + this.baseUrl + `?qty=${qty}`, data);
   }
 
   getAllTicketsForUser() {

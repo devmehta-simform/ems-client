@@ -33,11 +33,14 @@ export class QrService {
         mergeMap(([qrCode]) =>
           qrCode
             ? this.ticketService
-                .create({
-                  userId: data.userId,
-                  eventId: data.event.id,
-                  qrCode,
-                })
+                .create(
+                  {
+                    userId: data.userId,
+                    eventId: data.event.id,
+                    qrCode,
+                  },
+                  data.qty
+                )
                 .pipe(
                   map(res => {
                     if (
