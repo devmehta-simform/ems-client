@@ -17,6 +17,12 @@
     <a class="btn btn-ghost text-xl">EMS</a>
   </div>
   <div class="navbar-center hidden md:flex">
+    <div class="mx-2 w-50">
+      <label class="input">
+        <img src="icons/search.svg" />
+        <input (keyup)="handleSearch($event)" type="search" required placeholder="Search" />
+      </label>
+    </div>
     <ul class="menu menu-horizontal px-1 gap-6">
       <li>
         <a routerLink="explore" routerLinkActive="bg-neutral text-white">Explore</a>

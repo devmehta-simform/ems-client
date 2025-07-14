@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { catchError, map, mergeMap, Observable, take, tap } from 'rxjs';
+import { BehaviorSubject, catchError, debounceTime, map, mergeMap, Observable, take, tap } from 'rxjs';
 import { EventSchema, EventDetailsSchema } from '../../response-types';
 import { z } from 'zod';
 import { CloudinaryService } from './cloudinary.service';
@@ -15,6 +15,7 @@ const EventsSchema = z.array(EventSchema);
 })
 export class EventService {
   private baseUrl = '/event';
+  private search$ = new BehaviorSubject<string>('');
 
   constructor(
     private httpClient: HttpClient,
@@ -22,8 +23,21 @@ export class EventService {
     private alertService: AlertService
   ) {}
 
-  getEvents(): Observable<z.infer<typeof EventsSchema>> {
-    return this.httpClient.get(environment.API_BASE_URL + this.baseUrl).pipe(
+  getSearch$() {
+    return this.search$.pipe(
+      debounceTime(1000),
+      mergeMap(searchQuery => {
+        return this.getEvents(searchQuery);
+      })
+    );
+  }
+
+  setSearch(searchQuery: string) {
+    this.search$.next(searchQuery);
+  }
+
+  getEvents(searchQuery?: string): Observable<z.infer<typeof EventsSchema>> {
+    return this.httpClient.get(environment.API_BASE_URL + this.baseUrl + `?searchQuery=${searchQuery ?? ''}`).pipe(
       map(response => {
         if ('data' in response) {
           const isEventArray = EventsSchema.safeParse(response.data);

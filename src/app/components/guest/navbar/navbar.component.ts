@@ -3,6 +3,7 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { UserService } from '../../../services/user.service';
 import { UserLoginSchema } from '../../../../response-types';
 import { DataStoreService } from '../../../services/data-store.service';
+import { EventService } from '../../../services/event.service';
 
 @Component({
   selector: 'app-guest-navbar',
@@ -17,7 +18,8 @@ export class NavbarComponent {
   constructor(
     private userService: UserService,
     private router: Router,
-    private dataStoreService: DataStoreService
+    private dataStoreService: DataStoreService,
+    private eventService: EventService
   ) {
     const user = UserLoginSchema.safeParse(this.dataStoreService.getData('user'));
     if (user.success) {
@@ -26,6 +28,13 @@ export class NavbarComponent {
     } else {
       this.username = null;
       this.avatar = null;
+    }
+  }
+
+  handleSearch(event: Event) {
+    const el = event.target;
+    if (el instanceof HTMLInputElement) {
+      this.eventService.setSearch(el.value);
     }
   }
 

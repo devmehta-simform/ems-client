@@ -23,7 +23,7 @@ export class EventListComponent implements OnInit {
 
   ngOnInit() {
     this.eventList$ = this.eventService
-      .getEvents()
+      .getSearch$()
       .pipe(map(data => (this.eventList = data.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()))));
   }
 
