@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { Country, State, City, type ICountry, type IState, type ICity } from 'country-state-city';
 import { EventService } from '../../../services/event.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-event',
@@ -35,8 +36,34 @@ export class CreateEventComponent {
     images: new FormArray<FormControl<File>>([]),
   });
 
-  constructor(private eventService: EventService) {
+  operation: 'create' | 'update' = 'create';
+
+  constructor(
+    private eventService: EventService,
+    private router: Router
+  ) {
     this.countries = Country.getAllCountries();
+    // Prefill logic
+    const nav = this.router.getCurrentNavigation();
+    const state = nav?.extras?.state;
+    if (state && typeof state === 'object' && 'event' in state && state['event'] && 'operation' in state && state['operation'] === 'update') {
+      this.operation = 'update';
+      const event = state['event'];
+      this.form.patchValue({
+        name: event.name,
+        description: event.description,
+        ticketPrice: event.ticketPrice,
+        numberOfTickets: event.numberOfTickets,
+        dateOfEvent: event.dateOfEvent?.split('T')[0],
+        startTime: event.startTime?.split('T')[1]?.slice(0, 5),
+        endTime: event.endTime?.split('T')[1]?.slice(0, 5),
+        address: event.address,
+        country: event.country,
+        state: event.state,
+        city: event.city,
+        zipcode: event.zipcode,
+      });
+    }
   }
 
   getStates() {
@@ -173,7 +200,9 @@ export class CreateEventComponent {
         coverImage: undefined,
         album: undefined,
       };
-      this.eventService.create(newFormValue, coverImage.value, images.value);
+      // If editing, use 'update' as operation
+      const op = this.operation === 'update' ? 'update' : this.operation;
+      this.eventService.create(newFormValue, coverImage.value, images.value, op);
       // this.form.reset();
     } else this.form.markAllAsTouched();
     return;

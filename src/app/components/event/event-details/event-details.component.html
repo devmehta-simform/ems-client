@@ -1,4 +1,7 @@
 <div *ngIf="event$ | async as event">
+  <div class="flex justify-end mb-2" *ngIf="canEdit">
+    <button class="btn btn-outline btn-primary" (click)="editEvent()">Edit</button>
+  </div>
   <div class="hero bg-base-200 rounded-lg mt-3" [style]="'background-image: url(' + (event.coverImage | cloudinaryImage) + ');'">
     <div class="hero-overlay rounded-lg object-cover"></div>
     <div class="hero-content text-center w-full text-neutral-content m-10">
