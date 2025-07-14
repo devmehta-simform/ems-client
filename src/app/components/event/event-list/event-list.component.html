@@ -1,16 +1,49 @@
 @if (eventList$ | async; as eventList) {
   <div class="relative w-full px-6 md:px-10">
-    <div class="overflow-x-auto scroll-smooth snap-x snap-mandatory md:overflow-x-hidden">
-      <div class="flex flex-row gap-4 mt-4 p-2">
+    @if (isSearchMode) {
+      <div class="flex flex-col gap-4 mt-4">
         @for (event of eventList; track $index) {
-          <div class="snap-start h-auto" [id]="'slide' + $index">
-            <app-event [event]="event"></app-event>
+          <div
+            class="flex flex-row bg-white rounded-xl shadow-sm hover:shadow-md transition-all min-h-[10rem] w-full md:max-w-2xl mx-auto cursor-pointer"
+            [routerLink]="'/guest/event-details/' + event.id"
+            [id]="'slide' + $index">
+            <div class="w-32 h-32 bg-gray-200 rounded-l-xl overflow-hidden flex-shrink-0">
+              <img [src]="event.coverImage | cloudinaryImage" alt="Event cover" class="w-full h-full object-cover" appImgFallback />
+            </div>
+            <div class="flex flex-col justify-between flex-1 p-4">
+              <div class="space-y-1">
+                <h2 class="font-bold text-gray-900 text-lg truncate">{{ event.name }}</h2>
+                <h3 class="font-semibold text-gray-800 text-sm">
+                  {{ event.dateOfEvent | date: 'mediumDate' }} | {{ event.dateOfEvent | date: 'shortTime' }}
+                </h3>
+                <p class="text-sm text-gray-600">{{ event.ticketPrice | currency }}</p>
+              </div>
+              <div class="space-y-1 text-xs text-gray-600 mt-2">
+                <div class="flex items-center space-x-1">
+                  <img src="icons/calendar.svg" class="w-4 h-4" alt="calendar" />
+                  <span>{{ event.dateOfEvent | date: 'fullDate' }}</span>
+                </div>
+                <div class="flex items-center space-x-1">
+                  <img src="icons/location.svg" class="w-4 h-4" alt="location" />
+                  <span>{{ event.address }}</span>
+                </div>
+              </div>
+            </div>
           </div>
         }
       </div>
-    </div>
-
-    <button (click)="prevSlide()" class="hidden md:block btn btn-circle btn-sm btn-neutral absolute top-1/2 left-2 z-10 opacity-80">❮</button>
-    <button (click)="nextSlide()" class="hidden md:block btn btn-circle btn-sm btn-neutral absolute top-1/2 right-2 z-10 opacity-80">❯</button>
+    } @else {
+      <div class="overflow-x-auto scroll-smooth snap-x snap-mandatory md:overflow-x-hidden">
+        <div class="flex flex-row gap-4 mt-4 p-2">
+          @for (event of eventList; track $index) {
+            <div class="snap-start h-auto" [id]="'slide' + $index">
+              <app-event [event]="event"></app-event>
+            </div>
+          }
+        </div>
+      </div>
+      <button (click)="prevSlide()" class="hidden md:block btn btn-circle btn-sm btn-neutral absolute top-1/2 left-2 z-10 opacity-80">❮</button>
+      <button (click)="nextSlide()" class="hidden md:block btn btn-circle btn-sm btn-neutral absolute top-1/2 right-2 z-10 opacity-80">❯</button>
+    }
   </div>
 }

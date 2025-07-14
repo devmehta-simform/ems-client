@@ -1,4 +1,6 @@
 <div class="p-3">
-  <app-guest-trending-events class="hidden sm:block"></app-guest-trending-events>
+  @if (!isSearchMode) {
+    <app-guest-trending-events class="hidden sm:block"></app-guest-trending-events>
+  }
   <app-event-list></app-event-list>
 </div>
